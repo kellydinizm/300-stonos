@@ -600,98 +600,57 @@
       </div>
     </div>
 
-    <div class="grid-2" style="gap: 24px; align-items: start;">
-      <!-- Layers + Sugestão -->
-      <div>
-        <div class="card mb-16">
-          <div class="panel-header">
-            <div class="panel-title">Layers identificados no DXF</div>
-          </div>
-          <div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">PE-ÁREA LOTES</div>
-                <div class="layer-desc mt-8">Textos com área dos lotes</div>
-              </div>
-              <span class="font-500">314 textos</span>
-            </div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">Nº lotes</div>
-                <div class="layer-desc mt-8">Numeração dos lotes</div>
-              </div>
-              <span class="font-500">314 textos</span>
-            </div>
-          </div>
+    <!-- Sugestão de trafos — linha horizontal -->
+    <div class="card mb-24">
+      <div style="padding: 16px 20px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+        <div>
+          <div class="text-sm text-muted mb-4">Sugestão de transformadores</div>
+          <div class="text-sm">Com base em <strong>1.418 kVA</strong> de demanda total e limite de <strong>95%</strong></div>
         </div>
-
-        <!-- Sugestão de trafos -->
-        <div class="card">
-          <div class="panel-header">
-            <div class="panel-title">Sugestão de transformadores</div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+          <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 20px; text-align: center;">
+            <div style="font-size: 22px; font-weight: 600;">4</div>
+            <div class="text-sm text-muted">× 225 kVA</div>
           </div>
-          <div style="padding: 20px;">
-            <div class="text-sm text-muted mb-16">Com base na demanda total de <strong>1.418 kVA</strong> e limite de utilização de <strong>95%</strong>:</div>
-            <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-              <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center;">
-                <div style="font-size: 28px; font-weight: 600;">4</div>
-                <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">Trafos de 225 kVA</div>
-                <div class="text-sm text-muted">Capacidade útil: 855 kVA</div>
-              </div>
-              <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 18px;">+</div>
-              <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center;">
-                <div style="font-size: 28px; font-weight: 600;">4</div>
-                <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">Trafos de 150 kVA</div>
-                <div class="text-sm text-muted">Capacidade útil: 570 kVA</div>
-              </div>
-            </div>
-            <div style="background: var(--bg); border-radius: var(--radius); padding: 12px 14px; display: flex; justify-content: space-between; font-size: 13px;">
-              <span class="text-muted">Capacidade útil total</span>
-              <span class="font-500">1.425 kVA <span style="color: var(--green); font-size: 12px;">▲ 7 kVA de folga</span></span>
-            </div>
-            <div class="alert alert-warning mt-16">
-              <span class="alert-icon">⚠</span>
-              <div class="text-sm">Esta é uma sugestão inicial. A distribuição real será definida na próxima etapa com a marcação no AutoCAD.</div>
-            </div>
+          <span style="color: var(--text-muted);">+</span>
+          <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 20px; text-align: center;">
+            <div style="font-size: 22px; font-weight: 600;">4</div>
+            <div class="text-sm text-muted">× 150 kVA</div>
+          </div>
+          <div style="background: var(--green-bg); border: 1px solid #b7dfc5; border-radius: var(--radius); padding: 10px 20px;">
+            <div style="font-size: 13px; color: var(--green); font-weight: 500;">Capacidade útil: 1.425 kVA</div>
+            <div style="font-size: 12px; color: var(--green);">▲ 7 kVA de folga</div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Tabela de lotes -->
-      <div class="card">
-        <div class="panel-header flex-between">
-          <div class="panel-title">Amostra de lotes — primeiros 10</div>
-          <span class="text-sm text-muted">de 314 lotes</span>
+    <!-- Tabela paginada -->
+    <div class="card">
+      <div class="panel-header flex-between">
+        <div class="panel-title">Lotes identificados</div>
+        <span class="text-sm text-muted" id="lotes-count-label">314 lotes — 1.418,00 kVA total</span>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Lote</th>
+              <th>Área real</th>
+              <th>Área consid.</th>
+              <th>Demanda</th>
+            </tr>
+          </thead>
+          <tbody id="lotes-tbody"></tbody>
+        </table>
+      </div>
+      <div style="padding: 12px 14px; background: #faf8f6; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn btn-ghost" id="btn-prev" onclick="lotesPage(-1)" style="padding: 6px 12px;">← Anterior</button>
+          <span class="text-sm text-muted" id="lotes-page-label">Página 1 de 32</span>
+          <button class="btn btn-ghost" id="btn-next" onclick="lotesPage(1)" style="padding: 6px 12px;">Próxima →</button>
         </div>
-        <div style="overflow-x: auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Lote</th>
-                <th>Quadra</th>
-                <th>Área real</th>
-                <th>Área consid.</th>
-                <th>Demanda</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>601</td><td>06</td><td>717,59 m²</td><td>600,00 m²</td><td>7,00 kVA</td></tr>
-              <tr><td>602</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>603</td><td>06</td><td>523,00 m²</td><td>523,00 m²</td><td>3,83 kVA</td></tr>
-              <tr><td>604</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>605</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>606</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>607</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>608</td><td>06</td><td>510,00 m²</td><td>510,00 m²</td><td>3,78 kVA</td></tr>
-              <tr><td>609</td><td>06</td><td>712,00 m²</td><td>600,00 m²</td><td>7,00 kVA</td></tr>
-              <tr><td>610</td><td>06</td><td>520,00 m²</td><td>520,00 m²</td><td>3,81 kVA</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="padding: 12px 14px; background: #faf8f6; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-          <span class="text-sm text-muted">Total: 314 lotes — 1.418,00 kVA</span>
-          <button class="btn btn-primary" onclick="goTo('screen-step2')">Continuar para etapa 2 →</button>
-        </div>
+        <button class="btn btn-primary" onclick="goTo('screen-step2')">Continuar para etapa 2 →</button>
       </div>
     </div>
   </div>
@@ -1211,6 +1170,94 @@
 
   // Inicializa mostrando o login
   goTo('screen-login');
+
+  // ============================================================
+  // TABELA DE LOTES PAGINADA
+  // ============================================================
+  function calcDemanda(area) {
+    if (area > 2000) return 14.00;
+    if (area > 1200) return 10.00;
+    if (area > 600)  return 7.00;
+    return parseFloat((3.50 + (area - 360) * (7.00 - 3.50) / (600 - 360)).toFixed(2));
+  }
+
+  function calcAreaConsid(area) {
+    if (area > 600) return 600.00;
+    return area;
+  }
+
+  // Lotes reais (primeiros 10, quadra 06)
+  var lotesReais = [
+    { lote: 601, area: 717.59 },
+    { lote: 602, area: 510.00 },
+    { lote: 603, area: 523.00 },
+    { lote: 604, area: 510.00 },
+    { lote: 605, area: 510.00 },
+    { lote: 606, area: 510.00 },
+    { lote: 607, area: 510.00 },
+    { lote: 608, area: 510.00 },
+    { lote: 609, area: 712.00 },
+    { lote: 610, area: 520.00 },
+  ];
+
+  // Gera todos os 314 lotes
+  var todosLotes = [];
+  var areasBase = [360,380,400,420,450,480,500,510,520,523,550,580,600,650,700,712,717,750,800,900,1100,1300,2100];
+  var quadras = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+  var seed = 42;
+  function rand() { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return Math.abs(seed) / 0xffffffff; }
+
+  for (var i = 0; i < 314; i++) {
+    var loteNum, area, quadra;
+    if (i < 10) {
+      loteNum = lotesReais[i].lote;
+      area = lotesReais[i].area;
+      quadra = '06';
+    } else {
+      loteNum = i < 100 ? (100 + i) : (i < 200 ? (200 + i - 100) : (300 + i - 200));
+      var aIdx = Math.floor(rand() * (areasBase.length - 4)); // evita extremos raros
+      area = parseFloat((areasBase[aIdx] + rand() * 20 - 10).toFixed(2));
+      quadra = quadras[Math.floor(i / 11) % 30];
+    }
+    var areaConsid = calcAreaConsid(area);
+    var demanda = calcDemanda(area);
+    todosLotes.push({ lote: loteNum, quadra: quadra, area: area, areaConsid: areaConsid, demanda: demanda });
+  }
+
+  var lotesCurrentPage = 1;
+  var lotesPorPagina = 10;
+  var totalPages = Math.ceil(todosLotes.length / lotesPorPagina);
+
+  function renderLotes() {
+    var tbody = document.getElementById('lotes-tbody');
+    if (!tbody) return;
+    var start = (lotesCurrentPage - 1) * lotesPorPagina;
+    var slice = todosLotes.slice(start, start + lotesPorPagina);
+    tbody.innerHTML = slice.map(function(l) {
+      return '<tr><td>' + l.lote + '</td>' +
+        '<td>' + l.area.toFixed(2).replace('.', ',') + ' m²</td>' +
+        '<td>' + l.areaConsid.toFixed(2).replace('.', ',') + ' m²</td>' +
+        '<td>' + l.demanda.toFixed(2).replace('.', ',') + ' kVA</td></tr>';
+    }).join('');
+    var label = document.getElementById('lotes-page-label');
+    if (label) label.textContent = 'Página ' + lotesCurrentPage + ' de ' + totalPages;
+    var prev = document.getElementById('btn-prev');
+    var next = document.getElementById('btn-next');
+    if (prev) prev.disabled = lotesCurrentPage === 1;
+    if (next) next.disabled = lotesCurrentPage === totalPages;
+  }
+
+  function lotesPage(dir) {
+    lotesCurrentPage = Math.min(Math.max(1, lotesCurrentPage + dir), totalPages);
+    renderLotes();
+  }
+
+  // Renderiza quando chega na tela de resultado
+  var origGoTo = goTo;
+  goTo = function(id) {
+    origGoTo(id);
+    if (id === 'screen-step1-result') { lotesCurrentPage = 1; renderLotes(); }
+  };
 
   function openModal() {
     document.getElementById('modal-new').classList.add('open');
