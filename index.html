@@ -113,6 +113,10 @@
   .gauge-pct { font-size: 22px; font-weight: 600; }
   .gauge-label { font-size: 10px; color: var(--text-muted); }
 
+  /* CHECKBOX */
+  .lot-checkbox { width: 14px; height: 14px; accent-color: var(--black); cursor: pointer; }
+  .lot-row-selected td { background: #f5f3f0; }
+
   /* UTIL BAR */
   .util-bar-wrap { background: var(--border); border-radius: 2px; height: 8px; }
   .util-bar { height: 8px; border-radius: 2px; transition: width 0.3s; }
@@ -821,152 +825,25 @@
       </div>
     </div>
 
-    <!-- Trafo cards -->
-    <div class="grid-4 mb-24" id="trafo-cards">
+    <!-- Trafo cards dinâmicos -->
+    <div class="grid-4 mb-24" id="trafo-cards-container"></div>
 
-      <!-- ET-01 -->
-      <div class="trafo-card selected" onclick="selectTrafo('ET-01')" id="card-ET-01">
-        <div class="trafo-id">ET-01</div>
-        <div class="trafo-kva">225 kVA</div>
-        <div class="trafo-stats">
-          <span>27 lotes</span>
-          <span>41,40 kVA</span>
-        </div>
-        <div class="flex-between text-sm mb-8">
-          <span class="text-muted">Utilização</span>
-          <span id="pct-ET-01" style="font-weight: 500; color: var(--green);">18,4%</span>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-bar util-green" id="bar-ET-01" style="width: 18.4%;"></div>
-        </div>
-        <div id="alert-ET-01"></div>
-      </div>
+    <!-- Painel de detalhe dinâmico -->
+    <div id="trafo-detail-container"></div>
 
-      <!-- ET-02 -->
-      <div class="trafo-card" onclick="selectTrafo('ET-02')" id="card-ET-02">
-        <div class="trafo-id">ET-02</div>
-        <div class="trafo-kva">75 kVA</div>
-        <div class="trafo-stats">
-          <span>19 lotes</span>
-          <span>11,02 kVA</span>
-        </div>
-        <div class="flex-between text-sm mb-8">
-          <span class="text-muted">Utilização</span>
-          <span id="pct-ET-02" style="font-weight: 500; color: var(--green);">14,7%</span>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-bar util-green" id="bar-ET-02" style="width: 14.7%;"></div>
-        </div>
-        <div id="alert-ET-02"></div>
-      </div>
-
-      <!-- ET-08 -->
-      <div class="trafo-card" onclick="selectTrafo('ET-08')" id="card-ET-08">
-        <div class="trafo-id">ET-08</div>
-        <div class="trafo-kva">75 kVA</div>
-        <div class="trafo-stats">
-          <span>18 lotes</span>
-          <span>0,00 kVA</span>
-        </div>
-        <div class="flex-between text-sm mb-8">
-          <span class="text-muted">Utilização</span>
-          <span id="pct-ET-08" style="font-weight: 500; color: var(--text-muted);">0,0%</span>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-bar util-green" id="bar-ET-08" style="width: 0%;"></div>
-        </div>
-        <div id="alert-ET-08"></div>
-      </div>
-
-      <!-- ET-09 -->
-      <div class="trafo-card" onclick="selectTrafo('ET-09')" id="card-ET-09">
-        <div class="trafo-id">ET-09</div>
-        <div class="trafo-kva">75 kVA</div>
-        <div class="trafo-stats">
-          <span>23 lotes</span>
-          <span>0,00 kVA</span>
-        </div>
-        <div class="flex-between text-sm mb-8">
-          <span class="text-muted">Utilização</span>
-          <span id="pct-ET-09" style="font-weight: 500; color: var(--text-muted);">0,0%</span>
-        </div>
-        <div class="util-bar-wrap">
-          <div class="util-bar util-green" id="bar-ET-09" style="width: 0%;"></div>
-        </div>
-        <div id="alert-ET-09"></div>
-      </div>
-
+    <!-- Popover mover lote -->
+    <div id="trocar-popover" style="display:none; position:absolute; background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:8px; z-index:50; min-width:160px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <div style="font-size:11px; font-weight:500; color:var(--text-muted); padding:4px 8px 8px; text-transform:uppercase; letter-spacing:0.5px;">Mover lote para</div>
+      <div id="trocar-options"></div>
     </div>
 
-    <!-- Detail panel -->
-    <div class="grid-2" style="gap: 24px; align-items: start;">
-
-      <!-- Gauge panel -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title" id="detail-title">ET-01 — 225 kVA</div>
-        </div>
-        <div class="panel-body">
-          <!-- Gauge -->
-          <div class="gauge-wrap mb-16">
-            <svg class="gauge-svg" width="120" height="120" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#F0ECE8" stroke-width="12"/>
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#1A7A3C" stroke-width="12"
-                stroke-dasharray="314" stroke-dashoffset="256" id="gauge-circle"
-                stroke-linecap="round"/>
-            </svg>
-            <div class="gauge-text">
-              <div class="gauge-pct" id="gauge-pct" style="color: var(--green);">18,4%</div>
-              <div class="gauge-label">utilização</div>
-            </div>
-          </div>
-
-          <div class="grid-2 mb-16" style="gap: 12px;">
-            <div style="text-align: center; padding: 12px; background: var(--bg); border-radius: var(--radius);">
-              <div class="text-sm text-muted">Demanda total</div>
-              <div style="font-size: 18px; font-weight: 500; margin-top: 4px;" id="detail-demand">41,40 kVA</div>
-            </div>
-            <div style="text-align: center; padding: 12px; background: var(--bg); border-radius: var(--radius);">
-              <div class="text-sm text-muted">Capacidade</div>
-              <div style="font-size: 18px; font-weight: 500; margin-top: 4px;" id="detail-cap">225,00 kVA</div>
-            </div>
-          </div>
-
-          <div id="detail-alert"></div>
-        </div>
-      </div>
-
-      <!-- Lots table -->
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title">Lotes atribuídos — ET-01</div>
-        </div>
-        <div style="max-height: 320px; overflow-y: auto;">
-          <table>
-            <thead>
-              <tr>
-                <th>Lote</th>
-                <th>Quadra</th>
-                <th>Área</th>
-                <th>Demanda</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>601</td><td>06</td><td>717,59 m²</td><td>7,00 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>602</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>603</td><td>06</td><td>523,00 m²</td><td>3,83 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>604</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>605</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>606</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>607</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>608</td><td>06</td><td>510,00 m²</td><td>3,78 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>609</td><td>06</td><td>712,00 m²</td><td>7,00 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-              <tr><td>610</td><td>06</td><td>520,00 m²</td><td>3,81 kVA</td><td><button class="btn btn-ghost" style="padding: 4px 10px; font-size: 11px;">Mover</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <!-- Barra de seleção múltipla -->
+    <div id="bulk-bar" style="display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--black); color:#fff; border-radius:var(--radius); padding:12px 20px; display:none; align-items:center; gap:16px; z-index:60;">
+      <span id="bulk-count" style="font-size:13px;">0 lotes selecionados</span>
+      <span style="color:#555;">|</span>
+      <span style="font-size:12px; color:#aaa;">Mover para:</span>
+      <div id="bulk-options" style="display:flex; gap:8px;"></div>
+      <button onclick="limparSelecao()" style="background:none; border:none; color:#888; cursor:pointer; font-size:18px; line-height:1; margin-left:8px;">×</button>
     </div>
   </div>
 </div>
@@ -1241,6 +1118,7 @@
   goTo = function(id) {
     origGoTo(id);
     if (id === 'screen-step1-result') { lotesCurrentPage = 1; renderLotes(); }
+    if (id === 'screen-step3') { initStep3(); }
   };
 
   function resetUpload(zona, box, continuar, stepIds, timeoutArr) {
@@ -1374,116 +1252,355 @@
   }
 
   // ============================================================
-  // PAINEL DE TRAFOS
+  // PAINEL DE TRAFOS — DIMENSIONAMENTO INTERATIVO
   // ============================================================
-  const trafos = {
-    'ET-01': { kva: 225, demand: 41.40, lots: 27 },
-    'ET-02': { kva: 75,  demand: 11.02, lots: 19 },
-    'ET-08': { kva: 75,  demand: 0,     lots: 18 },
-    'ET-09': { kva: 75,  demand: 0,     lots: 23 },
+
+  var trafosConfig = {
+    'ET-01': { kva: 225 },
+    'ET-02': { kva: 75 },
+    'ET-08': { kva: 75 },
+    'ET-09': { kva: 75 }
   };
-  let selectedTrafo = 'ET-01';
-  let globalLimit = 95;
+
+  // Lotes distribuídos por trafo (dados reais + gerados)
+  var lotesTrafoData = [
+    // ET-01 (225 kVA) — 27 lotes, demanda ~108 kVA → ~48%
+    {id:601,q:'06',area:717.59,dem:7.00,trafo:'ET-01'},
+    {id:602,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:603,q:'06',area:523.00,dem:3.83,trafo:'ET-01'},
+    {id:604,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:605,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:606,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:607,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:608,q:'06',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:609,q:'06',area:712.00,dem:7.00,trafo:'ET-01'},
+    {id:610,q:'06',area:520.00,dem:3.81,trafo:'ET-01'},
+    {id:611,q:'07',area:480.00,dem:3.64,trafo:'ET-01'},
+    {id:612,q:'07',area:495.00,dem:3.69,trafo:'ET-01'},
+    {id:613,q:'07',area:500.00,dem:3.71,trafo:'ET-01'},
+    {id:614,q:'07',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:615,q:'07',area:460.00,dem:3.57,trafo:'ET-01'},
+    {id:616,q:'07',area:530.00,dem:3.85,trafo:'ET-01'},
+    {id:617,q:'07',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:618,q:'08',area:650.00,dem:7.00,trafo:'ET-01'},
+    {id:619,q:'08',area:480.00,dem:3.64,trafo:'ET-01'},
+    {id:620,q:'08',area:500.00,dem:3.71,trafo:'ET-01'},
+    {id:621,q:'08',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:622,q:'08',area:520.00,dem:3.81,trafo:'ET-01'},
+    {id:623,q:'08',area:490.00,dem:3.67,trafo:'ET-01'},
+    {id:624,q:'09',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:625,q:'09',area:480.00,dem:3.64,trafo:'ET-01'},
+    {id:626,q:'09',area:510.00,dem:3.78,trafo:'ET-01'},
+    {id:627,q:'09',area:500.00,dem:3.71,trafo:'ET-01'},
+    // ET-02 (75 kVA) — 19 lotes, demanda ~66 kVA → ~88%
+    {id:101,q:'01',area:500.00,dem:3.71,trafo:'ET-02'},
+    {id:102,q:'01',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:103,q:'01',area:490.00,dem:3.67,trafo:'ET-02'},
+    {id:104,q:'01',area:480.00,dem:3.64,trafo:'ET-02'},
+    {id:105,q:'01',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:106,q:'02',area:520.00,dem:3.81,trafo:'ET-02'},
+    {id:107,q:'02',area:500.00,dem:3.71,trafo:'ET-02'},
+    {id:108,q:'02',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:109,q:'02',area:480.00,dem:3.64,trafo:'ET-02'},
+    {id:110,q:'02',area:490.00,dem:3.67,trafo:'ET-02'},
+    {id:111,q:'03',area:500.00,dem:3.71,trafo:'ET-02'},
+    {id:112,q:'03',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:113,q:'03',area:480.00,dem:3.64,trafo:'ET-02'},
+    {id:114,q:'03',area:495.00,dem:3.69,trafo:'ET-02'},
+    {id:115,q:'03',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:116,q:'04',area:500.00,dem:3.71,trafo:'ET-02'},
+    {id:117,q:'04',area:510.00,dem:3.78,trafo:'ET-02'},
+    {id:118,q:'04',area:490.00,dem:3.67,trafo:'ET-02'},
+    {id:119,q:'04',area:480.00,dem:3.64,trafo:'ET-02'},
+    // ET-08 (75 kVA) — 18 lotes, demanda ~63 kVA → ~84%
+    {id:201,q:'11',area:490.00,dem:3.67,trafo:'ET-08'},
+    {id:202,q:'11',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:203,q:'11',area:480.00,dem:3.64,trafo:'ET-08'},
+    {id:204,q:'11',area:500.00,dem:3.71,trafo:'ET-08'},
+    {id:205,q:'12',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:206,q:'12',area:490.00,dem:3.67,trafo:'ET-08'},
+    {id:207,q:'12',area:480.00,dem:3.64,trafo:'ET-08'},
+    {id:208,q:'12',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:209,q:'13',area:500.00,dem:3.71,trafo:'ET-08'},
+    {id:210,q:'13',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:211,q:'13',area:480.00,dem:3.64,trafo:'ET-08'},
+    {id:212,q:'13',area:490.00,dem:3.67,trafo:'ET-08'},
+    {id:213,q:'14',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:214,q:'14',area:500.00,dem:3.71,trafo:'ET-08'},
+    {id:215,q:'14',area:480.00,dem:3.64,trafo:'ET-08'},
+    {id:216,q:'14',area:510.00,dem:3.78,trafo:'ET-08'},
+    {id:217,q:'15',area:490.00,dem:3.67,trafo:'ET-08'},
+    {id:218,q:'15',area:500.00,dem:3.71,trafo:'ET-08'},
+    // ET-09 (75 kVA) — 23 lotes, demanda ~95 kVA → ~127% ACIMA DO LIMITE
+    {id:301,q:'21',area:700.00,dem:7.00,trafo:'ET-09'},
+    {id:302,q:'21',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:303,q:'21',area:680.00,dem:7.00,trafo:'ET-09'},
+    {id:304,q:'21',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:305,q:'21',area:490.00,dem:3.67,trafo:'ET-09'},
+    {id:306,q:'22',area:710.00,dem:7.00,trafo:'ET-09'},
+    {id:307,q:'22',area:500.00,dem:3.71,trafo:'ET-09'},
+    {id:308,q:'22',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:309,q:'22',area:480.00,dem:3.64,trafo:'ET-09'},
+    {id:310,q:'22',area:490.00,dem:3.67,trafo:'ET-09'},
+    {id:311,q:'23',area:720.00,dem:7.00,trafo:'ET-09'},
+    {id:312,q:'23',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:313,q:'23',area:500.00,dem:3.71,trafo:'ET-09'},
+    {id:314,q:'23',area:480.00,dem:3.64,trafo:'ET-09'},
+    {id:315,q:'24',area:690.00,dem:7.00,trafo:'ET-09'},
+    {id:316,q:'24',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:317,q:'24',area:490.00,dem:3.67,trafo:'ET-09'},
+    {id:318,q:'24',area:500.00,dem:3.71,trafo:'ET-09'},
+    {id:319,q:'25',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:320,q:'25',area:480.00,dem:3.64,trafo:'ET-09'},
+    {id:321,q:'25',area:700.00,dem:7.00,trafo:'ET-09'},
+    {id:322,q:'25',area:510.00,dem:3.78,trafo:'ET-09'},
+    {id:323,q:'25',area:490.00,dem:3.67,trafo:'ET-09'}
+  ];
+
+  var selectedTrafoId = null;
+  var globalLimit = 95;
+  var selectedLotes = {};
+  var trocarLoteId = null;
+
+  function fmtN(n) { return n.toFixed(2).replace('.', ','); }
+
+  function getTrafoDemand(trafoId) {
+    return lotesTrafoData.filter(function(l){ return l.trafo === trafoId; })
+      .reduce(function(s,l){ return s + l.dem; }, 0);
+  }
+
+  function getTrafoLots(trafoId) {
+    return lotesTrafoData.filter(function(l){ return l.trafo === trafoId; });
+  }
 
   function getColor(pct) {
     if (pct >= globalLimit) return 'red';
-    if (pct >= globalLimit * 0.85) return 'yellow';
+    if (pct >= globalLimit * 0.88) return 'yellow';
     return 'green';
   }
   function getColorVar(pct) {
     if (pct >= globalLimit) return 'var(--red)';
-    if (pct >= globalLimit * 0.85) return '#F59E0B';
+    if (pct >= globalLimit * 0.88) return '#F59E0B';
     return 'var(--green)';
   }
 
   function updateLimit(val) {
     globalLimit = parseInt(val);
     document.getElementById('global-limit-display').textContent = val + '%';
-    Object.keys(trafos).forEach(id => refreshCard(id));
-    refreshDetail();
+    renderAllTrafos();
   }
 
-  function refreshCard(id) {
-    const t = trafos[id];
-    const pct = t.kva > 0 ? (t.demand / t.kva * 100) : 0;
-    const color = getColor(pct);
-    const colorVar = getColorVar(pct);
-
-    const bar = document.getElementById('bar-' + id);
-    const pctEl = document.getElementById('pct-' + id);
-    const alertEl = document.getElementById('alert-' + id);
-
-    if (bar) {
-      bar.style.width = pct.toFixed(1) + '%';
-      bar.className = 'util-bar util-' + color;
-    }
-    if (pctEl) {
-      pctEl.textContent = pct.toFixed(1).replace('.', ',') + '%';
-      pctEl.style.color = colorVar;
-    }
-    if (alertEl) {
-      if (color === 'red') {
-        alertEl.innerHTML = '<div class="alert alert-error mt-8" style="font-size: 11px; padding: 6px 10px;">Acima do limite de ' + globalLimit + '%</div>';
-      } else if (color === 'yellow') {
-        alertEl.innerHTML = '<div class="alert alert-warning mt-8" style="font-size: 11px; padding: 6px 10px;">Próximo ao limite</div>';
-      } else {
-        alertEl.innerHTML = '';
-      }
-    }
+  function renderAllTrafos() {
+    var container = document.getElementById('trafo-cards-container');
+    if (!container) return;
+    var ids = Object.keys(trafosConfig);
+    container.innerHTML = ids.map(function(id) {
+      var kva = trafosConfig[id].kva;
+      var dem = getTrafoDemand(id);
+      var lots = getTrafoLots(id).length;
+      var pct = dem / kva * 100;
+      var color = getColor(pct);
+      var colorVar = getColorVar(pct);
+      var barW = Math.min(pct, 100).toFixed(1);
+      var isSelected = id === selectedTrafoId;
+      var alertHtml = '';
+      if (color === 'red') alertHtml = '<div class="alert alert-error mt-8" style="font-size:11px;padding:5px 8px;">Acima do limite (' + globalLimit + '%)</div>';
+      else if (color === 'yellow') alertHtml = '<div class="alert alert-warning mt-8" style="font-size:11px;padding:5px 8px;">Próximo ao limite</div>';
+      return '<div class="trafo-card' + (isSelected ? ' selected' : '') + '" onclick="selectTrafo(\'' + id + '\')" id="card-' + id + '">' +
+        '<div class="trafo-id">' + id + '</div>' +
+        '<div class="trafo-kva">' + kva + ' kVA</div>' +
+        '<div class="trafo-stats"><span>' + lots + ' lotes</span><span>' + fmtN(dem) + ' kVA</span></div>' +
+        '<div class="flex-between text-sm mb-8"><span class="text-muted">Utilização</span>' +
+        '<span style="font-weight:500;color:' + colorVar + ';">' + pct.toFixed(1).replace('.', ',') + '%</span></div>' +
+        '<div class="util-bar-wrap"><div class="util-bar util-' + color + '" style="width:' + barW + '%;"></div></div>' +
+        alertHtml + '</div>';
+    }).join('');
   }
 
   function selectTrafo(id) {
-    selectedTrafo = id;
-    document.querySelectorAll('.trafo-card').forEach(c => c.classList.remove('selected'));
-    document.getElementById('card-' + id).classList.add('selected');
-    refreshDetail();
+    selectedTrafoId = id;
+    selectedLotes = {};
+    atualizarBulkBar();
+    renderAllTrafos();
+    renderDetail();
   }
 
-  function refreshDetail() {
-    const t = trafos[selectedTrafo];
-    const pct = t.kva > 0 ? (t.demand / t.kva * 100) : 0;
-    const color = getColor(pct);
-    const colorVar = getColorVar(pct);
+  function renderDetail() {
+    var container = document.getElementById('trafo-detail-container');
+    if (!container || !selectedTrafoId) { if(container) container.innerHTML = ''; return; }
+    var id = selectedTrafoId;
+    var kva = trafosConfig[id].kva;
+    var dem = getTrafoDemand(id);
+    var pct = dem / kva * 100;
+    var color = getColor(pct);
+    var colorVar = getColorVar(pct);
+    var circumference = 314;
+    var offset = circumference - Math.min(pct / 100, 1) * circumference;
+    var alertHtml = '';
+    if (color === 'red') alertHtml = '<div class="alert alert-error mt-16"><span class="alert-icon">⚠</span><div>Trafo acima do limite de ' + globalLimit + '%. Mova lotes para outro trafo.</div></div>';
+    else if (color === 'yellow') alertHtml = '<div class="alert alert-warning mt-16"><span class="alert-icon">⚠</span><div>Trafo próximo do limite de ' + globalLimit + '%. Atenção ao adicionar lotes.</div></div>';
+    else alertHtml = '<div class="alert alert-success mt-16"><span class="alert-icon">✓</span><div>Trafo dentro do limite de utilização.</div></div>';
 
-    // Gauge
-    const circumference = 314;
-    const offset = circumference - (pct / 100) * circumference;
-    const circle = document.getElementById('gauge-circle');
-    if (circle) {
-      circle.style.strokeDashoffset = offset.toFixed(1);
-      circle.style.stroke = colorVar;
-    }
+    var lots = getTrafoLots(id);
+    var otherIds = Object.keys(trafosConfig).filter(function(x){ return x !== id; });
+    var tbody = lots.map(function(l) {
+      var chk = selectedLotes[l.id] ? ' checked' : '';
+      return '<tr class="' + (selectedLotes[l.id] ? 'lot-row-selected' : '') + '">' +
+        '<td><input type="checkbox" class="lot-checkbox"' + chk + ' onchange="toggleLote(' + l.id + ', this.checked)"></td>' +
+        '<td>' + l.id + '</td><td>' + l.q + '</td>' +
+        '<td>' + fmtN(l.area) + ' m²</td>' +
+        '<td>' + fmtN(l.dem) + ' kVA</td>' +
+        '<td style="position:relative;">' +
+          '<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="abrirTrocar(' + l.id + ', this)">Trocar</button>' +
+        '</td></tr>';
+    }).join('');
 
-    const gaugePct = document.getElementById('gauge-pct');
-    if (gaugePct) {
-      gaugePct.textContent = pct.toFixed(1).replace('.', ',') + '%';
-      gaugePct.style.color = colorVar;
-    }
+    container.innerHTML =
+      '<div class="grid-2" style="gap:24px;align-items:start;">' +
+        '<div class="panel">' +
+          '<div class="panel-header"><div class="panel-title">' + id + ' — ' + kva + ' kVA</div></div>' +
+          '<div class="panel-body">' +
+            '<div class="gauge-wrap mb-16">' +
+              '<svg class="gauge-svg" width="120" height="120" viewBox="0 0 120 120">' +
+                '<circle cx="60" cy="60" r="50" fill="none" stroke="#F0ECE8" stroke-width="12"/>' +
+                '<circle cx="60" cy="60" r="50" fill="none" stroke="' + colorVar + '" stroke-width="12" stroke-dasharray="314" stroke-dashoffset="' + offset.toFixed(1) + '" stroke-linecap="round"/>' +
+              '</svg>' +
+              '<div class="gauge-text">' +
+                '<div class="gauge-pct" style="color:' + colorVar + ';">' + pct.toFixed(1).replace('.', ',') + '%</div>' +
+                '<div class="gauge-label">utilização</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="grid-2 mb-4" style="gap:12px;">' +
+              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Demanda total</div><div style="font-size:18px;font-weight:500;margin-top:4px;">' + fmtN(dem) + ' kVA</div></div>' +
+              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Capacidade</div><div style="font-size:18px;font-weight:500;margin-top:4px;">' + fmtN(kva) + ' kVA</div></div>' +
+            '</div>' +
+            alertHtml +
+          '</div>' +
+        '</div>' +
+        '<div class="panel">' +
+          '<div class="panel-header flex-between">' +
+            '<div class="panel-title">Lotes atribuídos — ' + id + '</div>' +
+            '<label style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;cursor:pointer;">' +
+              '<input type="checkbox" id="chk-all" onchange="toggleTodos(this.checked)"> Selecionar todos' +
+            '</label>' +
+          '</div>' +
+          '<div style="max-height:340px;overflow-y:auto;">' +
+            '<table><thead><tr><th style="width:32px;"></th><th>Lote</th><th>Quadra</th><th>Área</th><th>Demanda</th><th></th></tr></thead>' +
+            '<tbody>' + tbody + '</tbody></table>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
 
-    const titleEl = document.getElementById('detail-title');
-    if (titleEl) titleEl.textContent = selectedTrafo + ' — ' + t.kva + ' kVA';
-
-    const demandEl = document.getElementById('detail-demand');
-    if (demandEl) demandEl.textContent = t.demand.toFixed(2).replace('.', ',') + ' kVA';
-
-    const capEl = document.getElementById('detail-cap');
-    if (capEl) capEl.textContent = t.kva.toFixed(2).replace('.', ',') + ' kVA';
-
-    const alertEl = document.getElementById('detail-alert');
-    if (alertEl) {
-      if (color === 'red') {
-        alertEl.innerHTML = '<div class="alert alert-error mt-8"><span class="alert-icon">⚠</span><div>Trafo acima do limite de ' + globalLimit + '%. Mova lotes para outro trafo.</div></div>';
-      } else if (color === 'yellow') {
-        alertEl.innerHTML = '<div class="alert alert-warning mt-8"><span class="alert-icon">⚠</span><div>Trafo próximo ao limite de ' + globalLimit + '%. Atenção ao adicionar lotes.</div></div>';
-      } else {
-        alertEl.innerHTML = '<div class="alert alert-success mt-8"><span class="alert-icon">✓</span><div>Trafo dentro do limite de utilização.</div></div>';
+  function toggleLote(id, checked) {
+    if (checked) selectedLotes[id] = true;
+    else delete selectedLotes[id];
+    atualizarBulkBar();
+    // atualiza visual da linha sem re-render completo
+    var rows = document.querySelectorAll('#trafo-detail-container tbody tr');
+    rows.forEach(function(tr) {
+      var chk = tr.querySelector('.lot-checkbox');
+      if (chk) {
+        tr.className = chk.checked ? 'lot-row-selected' : '';
       }
+    });
+  }
+
+  function toggleTodos(checked) {
+    var lots = getTrafoLots(selectedTrafoId);
+    selectedLotes = {};
+    if (checked) lots.forEach(function(l){ selectedLotes[l.id] = true; });
+    atualizarBulkBar();
+    renderDetail();
+  }
+
+  function atualizarBulkBar() {
+    var bar = document.getElementById('bulk-bar');
+    var count = Object.keys(selectedLotes).length;
+    if (!bar) return;
+    if (count === 0) { bar.style.display = 'none'; return; }
+    bar.style.display = 'flex';
+    var countEl = document.getElementById('bulk-count');
+    if (countEl) countEl.textContent = count + ' lote' + (count > 1 ? 's' : '') + ' selecionado' + (count > 1 ? 's' : '');
+    var optContainer = document.getElementById('bulk-options');
+    if (optContainer) {
+      var outros = Object.keys(trafosConfig).filter(function(x){ return x !== selectedTrafoId; });
+      optContainer.innerHTML = outros.map(function(tid) {
+        return '<button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;" onclick="moverSelecionados(\'' + tid + '\')">' + tid + '</button>';
+      }).join('');
     }
   }
 
-  // Inicializar trafos
-  Object.keys(trafos).forEach(id => refreshCard(id));
-  refreshDetail();
+  function limparSelecao() {
+    selectedLotes = {};
+    atualizarBulkBar();
+    renderDetail();
+  }
+
+  function abrirTrocar(loteId, btn) {
+    fecharTrocar();
+    trocarLoteId = loteId;
+    var pop = document.getElementById('trocar-popover');
+    var opts = document.getElementById('trocar-options');
+    var outros = Object.keys(trafosConfig).filter(function(x){ return x !== selectedTrafoId; });
+    opts.innerHTML = outros.map(function(tid) {
+      var dem = getTrafoDemand(tid);
+      var kva = trafosConfig[tid].kva;
+      var pct = (dem / kva * 100).toFixed(1).replace('.', ',');
+      return '<button onclick="moverLote(' + loteId + ',\'' + tid + '\')" style="display:block;width:100%;text-align:left;padding:6px 8px;background:none;border:none;cursor:pointer;font-size:13px;border-radius:2px;" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'none\'">' +
+        tid + ' <span style="color:var(--text-muted);font-size:11px;">— ' + pct + '% utiliz.</span></button>';
+    }).join('');
+    var rect = btn.getBoundingClientRect();
+    pop.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+    pop.style.left = (rect.left + window.scrollX) + 'px';
+    pop.style.display = 'block';
+    setTimeout(function(){ document.addEventListener('click', fecharTrocarExterno); }, 10);
+  }
+
+  function fecharTrocarExterno(e) {
+    var pop = document.getElementById('trocar-popover');
+    if (pop && !pop.contains(e.target)) {
+      fecharTrocar();
+      document.removeEventListener('click', fecharTrocarExterno);
+    }
+  }
+
+  function fecharTrocar() {
+    var pop = document.getElementById('trocar-popover');
+    if (pop) pop.style.display = 'none';
+    trocarLoteId = null;
+  }
+
+  function moverLote(loteId, novoTrafo) {
+    var lote = lotesTrafoData.filter(function(l){ return l.id === loteId; })[0];
+    if (lote) lote.trafo = novoTrafo;
+    delete selectedLotes[loteId];
+    fecharTrocar();
+    atualizarBulkBar();
+    renderAllTrafos();
+    renderDetail();
+  }
+
+  function moverSelecionados(novoTrafo) {
+    Object.keys(selectedLotes).forEach(function(id) {
+      var lote = lotesTrafoData.filter(function(l){ return l.id === parseInt(id); })[0];
+      if (lote) lote.trafo = novoTrafo;
+    });
+    selectedLotes = {};
+    atualizarBulkBar();
+    renderAllTrafos();
+    renderDetail();
+  }
+
+  // Inicializa tela 3
+  function initStep3() {
+    selectedTrafoId = null;
+    selectedLotes = {};
+    renderAllTrafos();
+    renderDetail();
+    var bar = document.getElementById('bulk-bar');
+    if (bar) bar.style.display = 'none';
+  }
 </script>
 </body>
 </html>
