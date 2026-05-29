@@ -831,11 +831,6 @@
     <!-- Painel de detalhe dinâmico -->
     <div id="trafo-detail-container"></div>
 
-    <!-- Popover mover lote -->
-    <div id="trocar-popover" style="display:none; position:absolute; background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:8px; z-index:50; min-width:160px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-      <div style="font-size:11px; font-weight:500; color:var(--text-muted); padding:4px 8px 8px; text-transform:uppercase; letter-spacing:0.5px;">Mover lote para</div>
-      <div id="trocar-options"></div>
-    </div>
 
     <!-- Barra de seleção múltipla -->
     <div id="bulk-bar" style="display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--black); color:#fff; border-radius:var(--radius); padding:12px 20px; display:none; align-items:center; gap:16px; z-index:60;">
@@ -1360,8 +1355,6 @@
   var selectedTrafoId = null;
   var globalLimit = 95;
   var selectedLotes = {};
-  var trocarLoteId = null;
-
   function fmtN(n) { return n.toFixed(2).replace('.', ','); }
 
   function getTrafoDemand(trafoId) {
@@ -1445,13 +1438,21 @@
     var otherIds = Object.keys(trafosConfig).filter(function(x){ return x !== id; });
     var tbody = lots.map(function(l) {
       var chk = selectedLotes[l.id] ? ' checked' : '';
+      var trocarBtns = otherIds.map(function(tid) {
+        var pct = (getTrafoDemand(tid) / trafosConfig[tid].kva * 100).toFixed(0);
+        return '<button class="btn btn-ghost" style="padding:3px 8px;font-size:11px;" onclick="moverLote(' + l.id + ',\'' + tid + '\')">' + tid + ' <span style="color:var(--text-muted);">(' + pct + '%)</span></button>';
+      }).join('');
       return '<tr class="' + (selectedLotes[l.id] ? 'lot-row-selected' : '') + '">' +
         '<td><input type="checkbox" class="lot-checkbox"' + chk + ' onchange="toggleLote(' + l.id + ', this.checked)"></td>' +
         '<td>' + l.id + '</td><td>' + l.q + '</td>' +
         '<td>' + fmtN(l.area) + ' m²</td>' +
         '<td>' + fmtN(l.dem) + ' kVA</td>' +
-        '<td style="position:relative;">' +
-          '<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="abrirTrocar(' + l.id + ', this)">Trocar</button>' +
+        '<td>' +
+          '<button id="trocar-btn-' + l.id + '" class="btn btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="abrirTrocarInline(' + l.id + ')">Trocar</button>' +
+          '<div id="trocar-opts-' + l.id + '" style="display:none;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">' +
+            trocarBtns +
+            '<button class="btn btn-ghost" style="padding:3px 8px;font-size:11px;color:var(--text-muted);" onclick="fecharTrocarInline(' + l.id + ')">×</button>' +
+          '</div>' +
         '</td></tr>';
     }).join('');
 
@@ -1545,45 +1546,27 @@
     renderDetail();
   }
 
-  function abrirTrocar(loteId, btn) {
-    fecharTrocar();
-    trocarLoteId = loteId;
-    var pop = document.getElementById('trocar-popover');
-    var opts = document.getElementById('trocar-options');
-    var outros = Object.keys(trafosConfig).filter(function(x){ return x !== selectedTrafoId; });
-    opts.innerHTML = outros.map(function(tid) {
-      var dem = getTrafoDemand(tid);
-      var kva = trafosConfig[tid].kva;
-      var pct = (dem / kva * 100).toFixed(1).replace('.', ',');
-      return '<button onclick="moverLote(' + loteId + ',\'' + tid + '\')" style="display:block;width:100%;text-align:left;padding:6px 8px;background:none;border:none;cursor:pointer;font-size:13px;border-radius:2px;" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'none\'">' +
-        tid + ' <span style="color:var(--text-muted);font-size:11px;">— ' + pct + '% utiliz.</span></button>';
-    }).join('');
-    var rect = btn.getBoundingClientRect();
-    pop.style.top = (rect.bottom + window.scrollY + 4) + 'px';
-    pop.style.left = (rect.left + window.scrollX) + 'px';
-    pop.style.display = 'block';
-    setTimeout(function(){ document.addEventListener('click', fecharTrocarExterno); }, 10);
+  function abrirTrocarInline(loteId) {
+    // Fecha qualquer outro aberto
+    document.querySelectorAll('[id^="trocar-opts-"]').forEach(function(el) { el.style.display = 'none'; });
+    document.querySelectorAll('[id^="trocar-btn-"]').forEach(function(el) { el.style.display = ''; });
+    var opts = document.getElementById('trocar-opts-' + loteId);
+    var btn = document.getElementById('trocar-btn-' + loteId);
+    if (opts) opts.style.display = 'flex';
+    if (btn) btn.style.display = 'none';
   }
 
-  function fecharTrocarExterno(e) {
-    var pop = document.getElementById('trocar-popover');
-    if (pop && !pop.contains(e.target)) {
-      fecharTrocar();
-      document.removeEventListener('click', fecharTrocarExterno);
-    }
-  }
-
-  function fecharTrocar() {
-    var pop = document.getElementById('trocar-popover');
-    if (pop) pop.style.display = 'none';
-    trocarLoteId = null;
+  function fecharTrocarInline(loteId) {
+    var opts = document.getElementById('trocar-opts-' + loteId);
+    var btn = document.getElementById('trocar-btn-' + loteId);
+    if (opts) opts.style.display = 'none';
+    if (btn) btn.style.display = '';
   }
 
   function moverLote(loteId, novoTrafo) {
     var lote = lotesTrafoData.filter(function(l){ return l.id === loteId; })[0];
     if (lote) lote.trafo = novoTrafo;
     delete selectedLotes[loteId];
-    fecharTrocar();
     atualizarBulkBar();
     renderAllTrafos();
     renderDetail();
