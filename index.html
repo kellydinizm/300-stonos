@@ -600,27 +600,27 @@
       </div>
     </div>
 
-    <!-- Sugestão de trafos — linha horizontal -->
-    <div class="card mb-24">
-      <div style="padding: 16px 20px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-        <div>
-          <div class="text-sm text-muted mb-4">Sugestão de transformadores</div>
-          <div class="text-sm">Com base em <strong>1.418 kVA</strong> de demanda total e limite de <strong>95%</strong></div>
+    <!-- Sugestão de trafos -->
+    <div style="border: 1px solid var(--border); border-radius: var(--radius); background: var(--white); margin-bottom: 24px;">
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 13px; font-weight: 500;">Sugestão de transformadores</span>
+        <span style="font-size: 12px; color: var(--text-muted);">Demanda total: 1.418 kVA · Limite: 95%</span>
+      </div>
+      <div style="padding: 14px 20px; display: flex; align-items: center; gap: 32px;">
+        <div style="display: flex; align-items: baseline; gap: 6px;">
+          <span style="font-size: 24px; font-weight: 600;">4</span>
+          <span style="font-size: 13px; color: var(--text-muted);">trafos de 225 kVA</span>
+          <span style="font-size: 12px; color: var(--text-muted); margin-left: 4px;">(855 kVA úteis)</span>
         </div>
-        <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
-          <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 20px; text-align: center;">
-            <div style="font-size: 22px; font-weight: 600;">4</div>
-            <div class="text-sm text-muted">× 225 kVA</div>
-          </div>
-          <span style="color: var(--text-muted);">+</span>
-          <div style="background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 20px; text-align: center;">
-            <div style="font-size: 22px; font-weight: 600;">4</div>
-            <div class="text-sm text-muted">× 150 kVA</div>
-          </div>
-          <div style="background: var(--green-bg); border: 1px solid #b7dfc5; border-radius: var(--radius); padding: 10px 20px;">
-            <div style="font-size: 13px; color: var(--green); font-weight: 500;">Capacidade útil: 1.425 kVA</div>
-            <div style="font-size: 12px; color: var(--green);">▲ 7 kVA de folga</div>
-          </div>
+        <span style="color: var(--border); font-size: 20px;">+</span>
+        <div style="display: flex; align-items: baseline; gap: 6px;">
+          <span style="font-size: 24px; font-weight: 600;">4</span>
+          <span style="font-size: 13px; color: var(--text-muted);">trafos de 150 kVA</span>
+          <span style="font-size: 12px; color: var(--text-muted); margin-left: 4px;">(570 kVA úteis)</span>
+        </div>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--green-bg); border-radius: var(--radius);">
+          <span style="font-size: 13px; color: var(--green); font-weight: 500;">1.425 kVA de capacidade útil</span>
+          <span style="font-size: 12px; color: var(--green); padding: 2px 6px; background: #d1ead9; border-radius: 2px;">+7 kVA folga</span>
         </div>
       </div>
     </div>
@@ -629,7 +629,10 @@
     <div class="card">
       <div class="panel-header flex-between">
         <div class="panel-title">Lotes identificados</div>
-        <span class="text-sm text-muted" id="lotes-count-label">314 lotes — 1.418,00 kVA total</span>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span class="text-sm text-muted">314 lotes · 1.418,00 kVA total</span>
+          <button class="btn btn-ghost" style="padding: 5px 12px; font-size: 12px;" onclick="goTo('screen-step1')">Reimportar DXF</button>
+        </div>
       </div>
       <div>
         <table>
@@ -650,7 +653,10 @@
           <span class="text-sm text-muted" id="lotes-page-label">Página 1 de 32</span>
           <button class="btn btn-ghost" id="btn-next" onclick="lotesPage(1)" style="padding: 6px 12px;">Próxima →</button>
         </div>
-        <button class="btn btn-primary" onclick="goTo('screen-step2')">Continuar para etapa 2 →</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn btn-secondary" onclick="goTo('screen-list')">Salvar e sair</button>
+          <button class="btn btn-primary" onclick="goTo('screen-step2')">Ir para dimensionamento →</button>
+        </div>
       </div>
     </div>
   </div>
