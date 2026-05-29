@@ -1511,7 +1511,15 @@
     selectedLotes = {};
     if (checked) lots.forEach(function(l){ selectedLotes[l.id] = true; });
     atualizarBulkBar();
-    renderDetail();
+    // Atualiza checkboxes e linhas sem re-render completo (evita conflito de DOM)
+    var rows = document.querySelectorAll('#trafo-detail-container tbody tr');
+    rows.forEach(function(tr, i) {
+      var lot = lots[i];
+      if (!lot) return;
+      var chk = tr.querySelector('.lot-checkbox');
+      if (chk) chk.checked = checked;
+      tr.className = checked ? 'lot-row-selected' : '';
+    });
   }
 
   function atualizarBulkBar() {
