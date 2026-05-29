@@ -871,8 +871,13 @@
   </div>
 
   <div class="page-content">
-    <div class="page-title mb-8">Etapa 1 — Upload do DXF com lotes</div>
-    <div class="page-sub mb-24">Faça o upload do arquivo DXF exportado do AutoCAD com os layers de lotes e quadras.</div>
+    <div class="flex-between mb-24">
+      <div>
+        <div class="page-title">Etapa 1 — Upload do DXF com lotes</div>
+        <div class="page-sub mt-8">Faça o upload do arquivo DXF exportado do AutoCAD com os layers de lotes e quadras.</div>
+      </div>
+      <button class="btn btn-secondary" onclick="goTo('screen-list')">← Voltar</button>
+    </div>
 
     <div class="grid-2" style="gap: 24px; align-items: start;">
       <!-- Upload zone -->
@@ -954,10 +959,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="step-action-bar">
-    <button class="btn btn-secondary" onclick="goTo('screen-list')">← Voltar</button>
-    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
   </div>
 </div>
 
@@ -1083,10 +1084,6 @@
       </div>
     </div>
   </div>
-  <div class="step-action-bar">
-    <button class="btn btn-secondary" onclick="goTo('screen-step1')">← Voltar</button>
-    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
-  </div>
 </div>
 
 <!-- ============================================================ -->
@@ -1127,10 +1124,13 @@
   <div class="page-content">
     <div class="flex-between mb-24">
       <div>
-        <div class="page-title mb-8">Etapa 2 — Marcação dos transformadores</div>
-        <div class="page-sub">Insira os marcadores de trafo no AutoCAD e exporte um novo DXF.</div>
+        <div class="page-title">Etapa 2 — Marcação dos transformadores</div>
+        <div class="page-sub mt-8">Insira os marcadores de trafo no AutoCAD e exporte um novo DXF.</div>
       </div>
-      <button class="btn btn-ghost" onclick="reimportarDXF2()">Reimportar DXF</button>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-secondary" onclick="goTo('screen-step1-result')">← Voltar</button>
+        <button class="btn btn-ghost" onclick="reimportarDXF2()">Reimportar DXF</button>
+      </div>
     </div>
 
     <div class="grid-2" style="gap: 24px; align-items: start;">
@@ -1199,10 +1199,6 @@
 
       </div>
     </div>
-  </div>
-  <div class="step-action-bar">
-    <button class="btn btn-secondary" onclick="goTo('screen-step1-result')">← Voltar</button>
-    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
   </div>
 </div>
 
@@ -1298,7 +1294,7 @@
         <div class="page-title">Etapa 4 — Validação do DXF final</div>
         <div class="page-sub mt-8">Faça o upload do DXF revisado para comparar com o dimensionamento aprovado.</div>
       </div>
-      <button class="btn btn-ghost" onclick="goTo('screen-list')">Sair</button>
+      <button class="btn btn-secondary" onclick="goTo('screen-step3')">← Voltar</button>
     </div>
 
     <!-- Upload zone -->
@@ -1433,10 +1429,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="step-action-bar">
-    <button class="btn btn-secondary" onclick="goTo('screen-step3')">← Voltar</button>
-    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
   </div>
 </div>
 
