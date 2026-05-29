@@ -1408,13 +1408,10 @@
       var alertHtml = '';
       if (color === 'red') alertHtml = '<div class="alert alert-error mt-8" style="font-size:11px;padding:5px 8px;">Acima do limite (' + globalLimit + '%)</div>';
       else if (color === 'yellow') alertHtml = '<div class="alert alert-warning mt-8" style="font-size:11px;padding:5px 8px;">Próximo ao limite</div>';
-      var kvaOpts = [225, 150, 112.5, 75].map(function(v) {
-        return '<option value="' + v + '"' + (v === kva ? ' selected' : '') + '>' + v + ' kVA</option>';
-      }).join('');
       return '<div class="trafo-card' + (isSelected ? ' selected' : '') + '" onclick="selectTrafo(\'' + id + '\')" id="card-' + id + '">' +
-        '<div class="flex-between mb-8"><div class="trafo-id">' + id + '</div>' +
-        '<select onclick="event.stopPropagation()" onchange="alterarKva(\'' + id + '\', parseFloat(this.value))" style="font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius);padding:2px 6px;background:var(--bg);cursor:pointer;font-family:Inter,sans-serif;">' + kvaOpts + '</select></div>' +
-        '<div class="trafo-stats"><span>' + lots + ' lotes</span><span>' + fmtN(dem) + ' kVA demanda</span></div>' +
+        '<div class="trafo-id">' + id + '</div>' +
+        '<div class="trafo-kva">' + kva + ' kVA</div>' +
+        '<div class="trafo-stats"><span>' + lots + ' lotes</span><span>' + fmtN(dem) + ' kVA</span></div>' +
         '<div class="flex-between text-sm mb-8"><span class="text-muted">Utilização</span>' +
         '<span style="font-weight:500;color:' + colorVar + ';">' + pct.toFixed(1).replace('.', ',') + '%</span></div>' +
         '<div class="util-bar-wrap"><div class="util-bar util-' + color + '" style="width:' + barW + '%;"></div></div>' +
@@ -1496,7 +1493,7 @@
             '</div>' +
             '<div class="grid-2 mb-4" style="gap:12px;">' +
               '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Demanda total</div><div style="font-size:18px;font-weight:500;margin-top:4px;">' + fmtN(dem) + ' kVA</div></div>' +
-              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Capacidade</div><div style="font-size:18px;font-weight:500;margin-top:4px;">' + fmtN(kva) + ' kVA</div></div>' +
+              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Capacidade</div><select onchange="alterarKva(\'' + id + '\', parseFloat(this.value))" style="font-size:18px;font-weight:500;margin-top:4px;border:none;background:transparent;cursor:pointer;font-family:Inter,sans-serif;color:var(--black);text-align:center;">' + [225,150,112.5,75].map(function(v){ return '<option value="'+v+'"'+(v===kva?' selected':'')+'>'+v+' kVA</option>'; }).join('') + '</select></div>' +
             '</div>' +
             alertHtml +
           '</div>' +
