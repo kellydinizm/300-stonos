@@ -821,7 +821,10 @@
             <span id="global-limit-display" style="font-size: 15px; font-weight: 500; color: var(--red); min-width: 36px;">95%</span>
           </div>
         </div>
-        <button class="btn btn-primary" onclick="goTo('screen-step4')">Validar DXF final →</button>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-secondary" onclick="goTo('screen-list')">Salvar e sair</button>
+          <button class="btn btn-primary" onclick="goTo('screen-step4')">Validar DXF final →</button>
+        </div>
       </div>
     </div>
 
@@ -970,29 +973,6 @@
 
       <!-- Summary -->
       <div>
-        <div class="panel mb-16">
-          <div class="panel-header">
-            <div class="panel-title">Resumo do dimensionamento aprovado</div>
-          </div>
-          <div style="padding: 0;">
-            <div class="layer-row">
-              <span>ET-01 — 225 kVA</span>
-              <span class="badge badge-green">18,4%</span>
-            </div>
-            <div class="layer-row">
-              <span>ET-02 — 75 kVA</span>
-              <span class="badge badge-green">14,7%</span>
-            </div>
-            <div class="layer-row">
-              <span>ET-08 — 75 kVA</span>
-              <span class="badge badge-gray">0,0%</span>
-            </div>
-            <div class="layer-row">
-              <span>ET-09 — 75 kVA</span>
-              <span class="badge badge-gray">0,0%</span>
-            </div>
-          </div>
-        </div>
         <div class="panel">
           <div class="panel-header">
             <div class="panel-title">O que é verificado</div>
