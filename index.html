@@ -21,7 +21,7 @@
     --text-muted: #6B6460;
     --radius: 4px;
   }
-  body { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--black); background: var(--bg); min-width: 1024px; }
+  body { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--black); background: var(--bg); min-width: 320px; }
   .screen { display: none; min-height: 100vh; }
 
   /* HEADER */
@@ -220,6 +220,94 @@
   .check-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
   .check-ok { background: var(--green-bg); color: var(--green); }
   .check-fail { background: var(--red-bg); color: var(--red); }
+
+  /* ICON BUTTONS */
+  .btn-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border-radius: var(--radius); border: 1px solid var(--border); background: var(--white); cursor: pointer; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
+  .btn-icon:hover { background: var(--bg); color: var(--black); border-color: #999; }
+  .btn-icon-primary { background: var(--red); color: #fff; border-color: var(--red); }
+  .btn-icon-primary:hover { background: #b01a1a; border-color: #b01a1a; }
+
+  /* FILTER BAR */
+  .filter-bar { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+  .filter-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+  .filter-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .filter-control { padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); }
+  .filter-control:focus { outline: none; border-color: var(--black); }
+  .card-hidden { display: none !important; }
+  .no-results { text-align: center; padding: 48px 20px; color: var(--text-muted); font-size: 14px; display: none; }
+
+  /* STEP ACTION BAR */
+  .step-action-bar { border-top: 1px solid var(--border); background: var(--white); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; bottom: 0; z-index: 10; }
+
+  /* PROJECT VIEW INFO ROW */
+  .info-row { display: flex; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--white); margin-bottom: 24px; flex-wrap: wrap; }
+  .info-item { flex: 1; min-width: 130px; padding: 16px 20px; border-right: 1px solid var(--border); }
+  .info-item:last-child { border-right: none; }
+  .info-item-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .info-item-val { font-size: 15px; font-weight: 500; }
+
+  /* VALIDATION REDESIGN */
+  .val-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .val-stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; display: flex; align-items: center; gap: 16px; }
+  .val-stat-card.ok { border-left: 4px solid var(--green); }
+  .val-stat-card.warn { border-left: 4px solid var(--red); }
+  .val-stat-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .val-stat-icon.ok { background: var(--green-bg); }
+  .val-stat-icon.warn { background: var(--red-bg); }
+  .val-stat-num { font-size: 38px; font-weight: 600; line-height: 1; }
+  .val-stat-num.ok { color: var(--green); }
+  .val-stat-num.warn { color: var(--red); }
+  .val-stat-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .divergence-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 2px; font-size: 11px; font-weight: 500; }
+  .div-badge-red { background: var(--red-bg); color: var(--red); }
+  .div-badge-warn { background: var(--yellow-bg); color: var(--yellow); }
+  .consistency-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .consistency-item:last-child { border-bottom: none; }
+  .consistency-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .ci-ok { background: var(--green-bg); color: var(--green); }
+  .ci-fail { background: var(--red-bg); color: var(--red); }
+  .diverg-table th { background: #fff5f5; }
+  .diverg-table tr:hover td { background: #fef8f8; }
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 768px) {
+    body { min-width: 0; }
+    .page-content { padding: 16px; }
+    .header { padding: 0 16px; height: 48px; }
+    .header-user { display: none; }
+    .progress-bar { padding: 0 12px; }
+    .progress-steps { gap: 4px; }
+    .step { gap: 6px; }
+    .step-label { display: none; }
+    .step-divider { width: 16px; margin: 0 2px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+    .flex-between { flex-wrap: wrap; gap: 10px; }
+    .page-title { font-size: 17px; }
+    .metric-value { font-size: 22px; }
+    .filter-bar { flex-direction: column; }
+    .filter-group { min-width: 100%; flex: none; }
+    th, td { padding: 8px 10px; font-size: 12px; }
+    .modal { width: 95vw; margin: 0 16px; }
+    .trafo-card { padding: 14px; }
+    .val-summary-grid { grid-template-columns: 1fr; }
+    #screen-login { align-items: flex-start; padding-top: 48px; padding: 20px; }
+    .login-card { width: 100%; max-width: 400px; padding: 28px 20px; }
+    .info-row { flex-direction: column; }
+    .info-item { border-right: none; border-bottom: 1px solid var(--border); min-width: 100%; }
+    .info-item:last-child { border-bottom: none; }
+    .step-action-bar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+    .upload-zone { padding: 32px 16px; }
+    .project-stats { flex-wrap: wrap; gap: 12px; }
+    .screen-list-grid { grid-template-columns: 1fr !important; }
+    .val-stat-num { font-size: 28px; }
+    .val-stat-icon { width: 40px; height: 40px; font-size: 18px; }
+    .gauge-wrap { width: 100px; height: 100px; }
+  }
+  @media (max-width: 480px) {
+    .logo { font-size: 18px; }
+    .btn { padding: 8px 14px; font-size: 12px; }
+    .header-nav { gap: 12px; }
+  }
 </style>
 </head>
 <body>
@@ -263,10 +351,35 @@
       <button class="btn btn-primary" onclick="openModal()">+ Novo empreendimento</button>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+    <!-- FILTROS -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label class="filter-label">Nome</label>
+        <input class="filter-control" type="text" id="filter-nome" placeholder="Buscar por nome..." oninput="filtrarEmpreendimentos()">
+      </div>
+      <div class="filter-group" style="max-width: 180px;">
+        <label class="filter-label">Cidade</label>
+        <input class="filter-control" type="text" id="filter-cidade" placeholder="Cidade..." oninput="filtrarEmpreendimentos()">
+      </div>
+      <div class="filter-group" style="max-width: 120px;">
+        <label class="filter-label">Estado</label>
+        <select class="filter-control" id="filter-estado" onchange="filtrarEmpreendimentos()">
+          <option value="">Todos</option>
+          <option>SP</option><option>MG</option><option>RJ</option><option>PR</option><option>SC</option>
+        </select>
+      </div>
+      <div class="filter-group" style="max-width: 180px;">
+        <label class="filter-label">Data de criação</label>
+        <input class="filter-control" type="date" id="filter-data" onchange="filtrarEmpreendimentos()">
+      </div>
+      <button class="btn btn-ghost" onclick="limparFiltros()" style="height: 36px; white-space: nowrap; align-self: flex-end;">Limpar filtros</button>
+    </div>
+
+    <div class="screen-list-grid" id="cards-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+    <div id="no-results" class="no-results" style="grid-column: 1/-1;">Nenhum empreendimento encontrado para os filtros aplicados.</div>
 
       <!-- CARD 1 — Em andamento (nosso projeto) -->
-      <div class="project-card">
+      <div class="project-card" data-nome="Condomínio X — Loteamento Residencial" data-cidade="Campinas" data-estado="SP" data-data="2026-05-12">
         <div class="flex-between mb-8">
           <span class="badge badge-yellow">Em andamento</span>
           <span class="text-sm text-muted">12 mai 2026</span>
@@ -299,14 +412,18 @@
             <div class="progress-dot pending"></div>
           </div>
         </div>
-        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px;">
-          <button class="btn btn-secondary" style="flex:1;" onclick="goTo('screen-projeto-view')">Ver</button>
-          <button class="btn btn-primary" style="flex:1;" onclick="goTo('screen-step1')">Editar</button>
+        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px; justify-content:flex-end; align-items:center;">
+          <button class="btn-icon" onclick="goTo('screen-projeto-view')" title="Ver detalhes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button class="btn-icon btn-icon-primary" onclick="goTo('screen-step1')" title="Editar — Etapa 1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          </button>
         </div>
       </div>
 
       <!-- CARD 2 — Concluído -->
-      <div class="project-card">
+      <div class="project-card" data-nome="Residencial Ipê Verde" data-cidade="Indaiatuba" data-estado="SP" data-data="2026-04-03">
         <div class="flex-between mb-8">
           <span class="badge badge-green">Concluído</span>
           <span class="text-sm text-muted">03 abr 2026</span>
@@ -339,14 +456,18 @@
             <div class="progress-dot done"></div>
           </div>
         </div>
-        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px;">
-          <button class="btn btn-secondary" style="flex:1;" onclick="goTo('screen-projeto-view')">Ver</button>
-          <button class="btn btn-ghost" style="flex:1;" onclick="goTo('screen-step3')">Editar</button>
+        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px; justify-content:flex-end; align-items:center;">
+          <button class="btn-icon" onclick="goTo('screen-projeto-view')" title="Ver detalhes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button class="btn-icon btn-icon-primary" onclick="goTo('screen-step3')" title="Editar — Dimensionamento">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          </button>
         </div>
       </div>
 
       <!-- CARD 3 — Concluído -->
-      <div class="project-card">
+      <div class="project-card" data-nome="Parque das Acácias — Fase 2" data-cidade="Hortolândia" data-estado="SP" data-data="2026-02-18">
         <div class="flex-between mb-8">
           <span class="badge badge-green">Concluído</span>
           <span class="text-sm text-muted">18 fev 2026</span>
@@ -379,9 +500,13 @@
             <div class="progress-dot done"></div>
           </div>
         </div>
-        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px;">
-          <button class="btn btn-secondary" style="flex:1;" onclick="goTo('screen-projeto-view')">Ver</button>
-          <button class="btn btn-ghost" style="flex:1;" onclick="goTo('screen-step3')">Editar</button>
+        <div style="display:flex; gap:8px; border-top:1px solid var(--border); padding-top:12px; justify-content:flex-end; align-items:center;">
+          <button class="btn-icon" onclick="goTo('screen-projeto-view')" title="Ver detalhes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+          <button class="btn-icon btn-icon-primary" onclick="goTo('screen-step3')" title="Editar — Dimensionamento">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -390,7 +515,7 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- TELA — VISUALIZAÇÃO DO PROJETO -->
+<!-- TELA — VISUALIZAÇÃO DO PROJETO (DETALHADA) -->
 <!-- ============================================================ -->
 <div id="screen-projeto-view" class="screen">
   <div class="header">
@@ -401,105 +526,262 @@
     </div>
   </div>
   <div class="page-content">
-    <div class="flex-between mb-24">
+    <div class="flex-between mb-20">
       <div>
         <div class="page-title">Residencial Ipê Verde</div>
         <div class="page-sub">Indaiatuba, SP · RDS Subterrânea · Concluído em 03 abr 2026</div>
       </div>
-      <div style="display:flex; gap:10px;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <button class="btn btn-secondary" onclick="goTo('screen-list')">← Voltar</button>
         <button class="btn btn-primary" onclick="goTo('screen-step3')">Editar dimensionamento</button>
+      </div>
+    </div>
+
+    <!-- Barra de informações do projeto -->
+    <div class="info-row">
+      <div class="info-item">
+        <div class="info-item-label">Cidade / Estado</div>
+        <div class="info-item-val">Indaiatuba, SP</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Tipo de rede</div>
+        <div class="info-item-val">RDS Subterrânea</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Responsável</div>
+        <div class="info-item-val">Daniel Engenheiro</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Criado em</div>
+        <div class="info-item-val">28 mar 2026</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Concluído em</div>
+        <div class="info-item-val">03 abr 2026</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Status</div>
+        <div class="info-item-val"><span class="badge badge-green">Concluído</span></div>
       </div>
     </div>
 
     <!-- Métricas gerais -->
     <div class="grid-4 mb-24">
       <div class="metric-card">
-        <div class="metric-label">Lotes</div>
+        <div class="metric-label">Total de lotes</div>
         <div class="metric-value">186<span class="metric-unit">un</span></div>
+        <div class="metric-sub">Área média: 548 m²</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Transformadores</div>
         <div class="metric-value">3<span class="metric-unit">un</span></div>
+        <div class="metric-sub">ET-01, ET-02, ET-03</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Demanda total</div>
         <div class="metric-value">821<span class="metric-unit">kVA</span></div>
+        <div class="metric-sub">Cálculo ABNT NBR 5410</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">Limite utilização</div>
+        <div class="metric-label">Limite de utilização</div>
         <div class="metric-value">95<span class="metric-unit">%</span></div>
+        <div class="metric-sub">Máx. atual: 91,2% (ET-03)</div>
       </div>
     </div>
 
-    <!-- Transformadores -->
+    <!-- Transformadores detalhados -->
     <div class="mb-24">
-      <div style="font-size:13px; font-weight:500; margin-bottom:12px;">Transformadores dimensionados</div>
+      <div style="font-size:14px; font-weight:500; margin-bottom:12px;">Transformadores dimensionados</div>
       <div class="grid-3" style="gap:16px;">
         <div class="card" style="padding:20px;">
-          <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-01</div>
-          <div style="font-size:20px; font-weight:600; margin-bottom:12px;">225 kVA</div>
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:8px;">
-            <span>68 lotes</span><span>312,40 kVA</span>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+            <div>
+              <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-01</div>
+              <div style="font-size:22px; font-weight:600;">225 kVA</div>
+            </div>
+            <span class="badge badge-green">OK</span>
           </div>
-          <div class="util-bar-wrap"><div class="util-bar util-green" style="width:69%;"></div></div>
-          <div style="text-align:right; font-size:12px; font-weight:500; color:var(--green); margin-top:4px;">69,0%</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Lotes</div>
+              <div style="font-size:15px; font-weight:500;">68</div>
+            </div>
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Demanda</div>
+              <div style="font-size:15px; font-weight:500;">312,4 kVA</div>
+            </div>
+          </div>
+          <div class="util-bar-wrap mb-8"><div class="util-bar util-green" style="width:69%;"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px;">
+            <span class="text-muted">Capacidade útil: 213,75 kVA</span>
+            <span style="font-weight:500; color:var(--green);">69,0%</span>
+          </div>
         </div>
         <div class="card" style="padding:20px;">
-          <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-02</div>
-          <div style="font-size:20px; font-weight:600; margin-bottom:12px;">225 kVA</div>
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:8px;">
-            <span>72 lotes</span><span>298,80 kVA</span>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+            <div>
+              <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-02</div>
+              <div style="font-size:22px; font-weight:600;">225 kVA</div>
+            </div>
+            <span class="badge badge-green">OK</span>
           </div>
-          <div class="util-bar-wrap"><div class="util-bar util-green" style="width:66%;"></div></div>
-          <div style="text-align:right; font-size:12px; font-weight:500; color:var(--green); margin-top:4px;">66,5%</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Lotes</div>
+              <div style="font-size:15px; font-weight:500;">72</div>
+            </div>
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Demanda</div>
+              <div style="font-size:15px; font-weight:500;">298,8 kVA</div>
+            </div>
+          </div>
+          <div class="util-bar-wrap mb-8"><div class="util-bar util-green" style="width:66%;"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px;">
+            <span class="text-muted">Capacidade útil: 213,75 kVA</span>
+            <span style="font-weight:500; color:var(--green);">66,5%</span>
+          </div>
         </div>
         <div class="card" style="padding:20px;">
-          <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-03</div>
-          <div style="font-size:20px; font-weight:600; margin-bottom:12px;">150 kVA</div>
-          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:8px;">
-            <span>46 lotes</span><span>209,80 kVA</span>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+            <div>
+              <div style="font-size:12px; font-weight:500; color:var(--text-muted); margin-bottom:4px;">ET-03</div>
+              <div style="font-size:22px; font-weight:600;">150 kVA</div>
+            </div>
+            <span class="badge badge-yellow">Atenção</span>
           </div>
-          <div class="util-bar-wrap"><div class="util-bar util-yellow" style="width:91%;"></div></div>
-          <div style="text-align:right; font-size:12px; font-weight:500; color:#F59E0B; margin-top:4px;">91,2%</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Lotes</div>
+              <div style="font-size:15px; font-weight:500;">46</div>
+            </div>
+            <div style="background:var(--bg); border-radius:var(--radius); padding:8px;">
+              <div style="font-size:11px; color:var(--text-muted); margin-bottom:2px;">Demanda</div>
+              <div style="font-size:15px; font-weight:500;">209,8 kVA</div>
+            </div>
+          </div>
+          <div class="util-bar-wrap mb-8"><div class="util-bar util-yellow" style="width:91%;"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:12px;">
+            <span class="text-muted">Capacidade útil: 142,5 kVA</span>
+            <span style="font-weight:500; color:#F59E0B;">91,2%</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Etapas concluídas -->
-    <div class="card">
-      <div class="panel-header">
-        <div class="panel-title">Etapas do projeto</div>
+    <!-- Grid 2 colunas: Etapas + Dados do arquivo -->
+    <div class="grid-2 mb-24" style="gap:16px; align-items:start;">
+      <!-- Etapas concluídas -->
+      <div class="card">
+        <div class="panel-header">
+          <div class="panel-title">Etapas do projeto</div>
+        </div>
+        <div>
+          <div class="layer-row" style="flex-wrap:wrap; gap:8px;">
+            <div class="flex-row gap-12" style="flex:1;">
+              <div class="check-icon check-ok">✓</div>
+              <div><strong>Etapa 1</strong> — Lotes brutos importados <span class="text-muted text-sm">· 186 lotes · 821 kVA</span></div>
+            </div>
+            <span class="text-sm text-muted">28 mar 2026</span>
+          </div>
+          <div class="layer-row" style="flex-wrap:wrap; gap:8px;">
+            <div class="flex-row gap-12" style="flex:1;">
+              <div class="check-icon check-ok">✓</div>
+              <div><strong>Etapa 2</strong> — Marcação de trafos <span class="text-muted text-sm">· 3 transformadores</span></div>
+            </div>
+            <span class="text-sm text-muted">31 mar 2026</span>
+          </div>
+          <div class="layer-row" style="flex-wrap:wrap; gap:8px;">
+            <div class="flex-row gap-12" style="flex:1;">
+              <div class="check-icon check-ok">✓</div>
+              <div><strong>Etapa 3</strong> — Dimensionamento concluído <span class="text-muted text-sm">· trafos dentro do limite</span></div>
+            </div>
+            <span class="text-sm text-muted">01 abr 2026</span>
+          </div>
+          <div class="layer-row" style="flex-wrap:wrap; gap:8px;">
+            <div class="flex-row gap-12" style="flex:1;">
+              <div class="check-icon check-ok">✓</div>
+              <div><strong>Etapa 4</strong> — Validação DXF final <span class="text-muted text-sm">· 0 divergências</span></div>
+            </div>
+            <span class="text-sm text-muted">03 abr 2026</span>
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="layer-row">
-          <div class="flex-row gap-12">
-            <div class="check-icon check-ok" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div>
-            <div><strong>Etapa 1</strong> — Lotes brutos importados <span class="text-muted text-sm">· 186 lotes · 821 kVA de demanda</span></div>
-          </div>
-          <span class="text-sm text-muted">28 mar 2026</span>
+
+      <!-- Dados dos arquivos e resumo técnico -->
+      <div class="card">
+        <div class="panel-header">
+          <div class="panel-title">Dados técnicos</div>
         </div>
-        <div class="layer-row">
-          <div class="flex-row gap-12">
-            <div class="check-icon check-ok" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div>
-            <div><strong>Etapa 2</strong> — Marcação de trafos importada <span class="text-muted text-sm">· 3 transformadores</span></div>
-          </div>
-          <span class="text-sm text-muted">31 mar 2026</span>
+        <div style="padding:0;">
+          <table>
+            <tbody>
+              <tr><td style="color:var(--text-muted);font-size:12px;width:48%;">Arquivo DXF lotes</td><td style="font-size:12px;font-weight:500;">ipeVerde_lotes.dxf</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Arquivo DXF trafos</td><td style="font-size:12px;font-weight:500;">ipeVerde_trafos.dxf</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Arquivo DXF final</td><td style="font-size:12px;font-weight:500;">ipeVerde_final.dxf</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Área mínima de lote</td><td style="font-size:12px;font-weight:500;">360 m²</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Área máxima de lote</td><td style="font-size:12px;font-weight:500;">2.180 m²</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Área média de lote</td><td style="font-size:12px;font-weight:500;">548 m²</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Norma aplicada</td><td style="font-size:12px;font-weight:500;">ABNT NBR 5410</td></tr>
+              <tr><td style="color:var(--text-muted);font-size:12px;">Divergências na validação</td><td style="font-size:12px;font-weight:500;color:var(--green);">0 (aprovado)</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="layer-row">
-          <div class="flex-row gap-12">
-            <div class="check-icon check-ok" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div>
-            <div><strong>Etapa 3</strong> — Dimensionamento concluído <span class="text-muted text-sm">· todos os trafos dentro do limite</span></div>
-          </div>
-          <span class="text-sm text-muted">01 abr 2026</span>
-        </div>
-        <div class="layer-row">
-          <div class="flex-row gap-12">
-            <div class="check-icon check-ok" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div>
-            <div><strong>Etapa 4</strong> — Validação DXF final <span class="text-muted text-sm">· 0 divergências</span></div>
-          </div>
-          <span class="text-sm text-muted">03 abr 2026</span>
-        </div>
+      </div>
+    </div>
+
+    <!-- Distribuição por quadra -->
+    <div class="card mb-24">
+      <div class="panel-header flex-between">
+        <div class="panel-title">Distribuição de lotes por transformador</div>
+        <span class="text-sm text-muted">186 lotes · 821 kVA total</span>
+      </div>
+      <div style="padding:0;">
+        <table>
+          <thead>
+            <tr><th>Transformador</th><th>Capacidade</th><th>Lotes</th><th>Demanda</th><th>Utilização</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:500;">ET-01</td>
+              <td>225 kVA</td>
+              <td>68 lotes</td>
+              <td>312,40 kVA</td>
+              <td>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="util-bar-wrap" style="flex:1; min-width:60px;"><div class="util-bar util-green" style="width:69%;"></div></div>
+                  <span style="font-size:12px; font-weight:500; color:var(--green); min-width:36px;">69,0%</span>
+                </div>
+              </td>
+              <td><span class="badge badge-green">OK</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:500;">ET-02</td>
+              <td>225 kVA</td>
+              <td>72 lotes</td>
+              <td>298,80 kVA</td>
+              <td>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="util-bar-wrap" style="flex:1; min-width:60px;"><div class="util-bar util-green" style="width:66%;"></div></div>
+                  <span style="font-size:12px; font-weight:500; color:var(--green); min-width:36px;">66,5%</span>
+                </div>
+              </td>
+              <td><span class="badge badge-green">OK</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:500;">ET-03</td>
+              <td>150 kVA</td>
+              <td>46 lotes</td>
+              <td>209,80 kVA</td>
+              <td>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="util-bar-wrap" style="flex:1; min-width:60px;"><div class="util-bar util-yellow" style="width:91%;"></div></div>
+                  <span style="font-size:12px; font-weight:500; color:#F59E0B; min-width:36px;">91,2%</span>
+                </div>
+              </td>
+              <td><span class="badge badge-yellow">Atenção</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -673,6 +955,10 @@
       </div>
     </div>
   </div>
+  <div class="step-action-bar">
+    <button class="btn btn-secondary" onclick="goTo('screen-list')">← Voltar</button>
+    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
+  </div>
 </div>
 
 <!-- ============================================================ -->
@@ -790,12 +1076,16 @@
           <span class="text-sm text-muted" id="lotes-page-label">Página 1 de 32</span>
           <button class="btn btn-ghost" id="btn-next" onclick="lotesPage(1)" style="padding: 6px 12px;">Próxima →</button>
         </div>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; flex-wrap:wrap;">
           <button class="btn btn-secondary" onclick="goTo('screen-list')">Salvar e sair</button>
           <button class="btn btn-primary" onclick="goTo('screen-step2')">Ir para dimensionamento →</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="step-action-bar">
+    <button class="btn btn-secondary" onclick="goTo('screen-step1')">← Voltar</button>
+    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
   </div>
 </div>
 
@@ -910,6 +1200,10 @@
       </div>
     </div>
   </div>
+  <div class="step-action-bar">
+    <button class="btn btn-secondary" onclick="goTo('screen-step1-result')">← Voltar</button>
+    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
+  </div>
 </div>
 
 <!-- ============================================================ -->
@@ -949,8 +1243,9 @@
             <span id="global-limit-display" style="font-size: 15px; font-weight: 500; color: var(--red); min-width: 36px;">95%</span>
           </div>
         </div>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btn-secondary" onclick="goTo('screen-list')">Salvar e sair</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="goTo('screen-step2')">← Voltar</button>
+          <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
           <button class="btn btn-primary" onclick="goTo('screen-step4')">Validar DXF final →</button>
         </div>
       </div>
@@ -998,107 +1293,150 @@
   </div>
 
   <div class="page-content">
-    <div class="page-title mb-8">Etapa 4 — Validação do DXF final</div>
-    <div class="page-sub mb-24">Faça o upload do DXF revisado para comparar com o dimensionamento aprovado.</div>
-
-    <div class="grid-2" style="gap: 24px; align-items: start;">
-      <!-- Upload -->
+    <div class="flex-between mb-24" style="flex-wrap:wrap; gap:12px;">
       <div>
-        <div class="upload-zone" onclick="startProcessing3()" id="upload-zone-3">
-          <div class="upload-icon">✅</div>
-          <div class="upload-title">Upload do DXF final revisado</div>
-          <div class="upload-sub mt-8">O sistema comparará cada lote com o dimensionamento aprovado</div>
-          <button class="btn btn-secondary mt-16">Selecionar arquivo</button>
+        <div class="page-title">Etapa 4 — Validação do DXF final</div>
+        <div class="page-sub mt-8">Faça o upload do DXF revisado para comparar com o dimensionamento aprovado.</div>
+      </div>
+      <button class="btn btn-ghost" onclick="goTo('screen-list')">Sair</button>
+    </div>
+
+    <!-- Upload zone -->
+    <div class="upload-zone mb-16" onclick="startProcessing3()" id="upload-zone-3">
+      <div class="upload-icon">📋</div>
+      <div class="upload-title">Upload do DXF final revisado</div>
+      <div class="upload-sub mt-8">O sistema comparará cada lote com o dimensionamento aprovado</div>
+      <button class="btn btn-secondary mt-16">Selecionar arquivo</button>
+    </div>
+
+    <div id="processing-box-3" style="display:none;" class="card mb-16">
+      <div style="padding: 20px;">
+        <div class="font-500 mb-16">Comparando com dimensionamento...</div>
+        <div id="ps3-1" class="processing-step ps-pending"><span id="ps3-1-icon">○</span><span>Leitura do DXF final</span></div>
+        <div id="ps3-2" class="processing-step ps-pending"><span id="ps3-2-icon">○</span><span>Extração de layers de trafo</span></div>
+        <div id="ps3-3" class="processing-step ps-pending"><span id="ps3-3-icon">○</span><span>Comparação lote a lote com dimensionamento</span></div>
+        <div id="ps3-4" class="processing-step ps-pending"><span id="ps3-4-icon">○</span><span>Geração do relatório de divergências</span></div>
+      </div>
+    </div>
+
+    <!-- Resultado da validação — redesenhado -->
+    <div id="validation-result" style="display: none;">
+
+      <!-- Cards de resumo -->
+      <div class="val-summary-grid mb-24">
+        <div class="val-stat-card ok">
+          <div class="val-stat-icon ok">✓</div>
+          <div>
+            <div class="val-stat-num ok">301</div>
+            <div class="val-stat-desc">lotes consistentes com o dimensionamento</div>
+          </div>
         </div>
-
-        <div id="processing-box-3" style="display:none;" class="card mt-16">
-          <div style="padding: 20px;">
-            <div class="font-500 mb-16">Comparando com dimensionamento...</div>
-            <div id="ps3-1" class="processing-step ps-pending"><span id="ps3-1-icon">○</span><span>Leitura do DXF final</span></div>
-            <div id="ps3-2" class="processing-step ps-pending"><span id="ps3-2-icon">○</span><span>Extração de layers de trafo</span></div>
-            <div id="ps3-3" class="processing-step ps-pending"><span id="ps3-3-icon">○</span><span>Comparação lote a lote com dimensionamento</span></div>
-            <div id="ps3-4" class="processing-step ps-pending"><span id="ps3-4-icon">○</span><span>Geração do relatório de divergências</span></div>
-          </div>
-        </div>
-
-        <!-- Result (hidden initially) -->
-        <div id="validation-result" style="display: none;" class="mt-16">
-          <div class="alert alert-success mb-16">
-            <span class="alert-icon">✓</span>
-            <div><strong>301 lotes consistentes</strong> com o dimensionamento aprovado.</div>
-          </div>
-          <div class="alert alert-error mb-16">
-            <span class="alert-icon">⚠</span>
-            <div><strong>3 divergências encontradas.</strong> Revise antes de confirmar.</div>
-          </div>
-          <div class="card">
-            <div class="panel-header">
-              <div class="panel-title">Divergências detectadas</div>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Lote</th>
-                  <th>Quadra</th>
-                  <th>Trafo no sistema</th>
-                  <th>Trafo no CAD</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>247</td><td>12</td>
-                  <td>ET-01</td>
-                  <td>ET-02</td>
-                  <td><span class="badge badge-red">Divergente</span></td>
-                </tr>
-                <tr>
-                  <td>312</td><td>15</td>
-                  <td>ET-08</td>
-                  <td>ET-09</td>
-                  <td><span class="badge badge-red">Divergente</span></td>
-                </tr>
-                <tr>
-                  <td>089</td><td>04</td>
-                  <td>ET-02</td>
-                  <td>—</td>
-                  <td><span class="badge badge-red">Sem marcador</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="card mt-16">
-            <div class="panel-header">
-              <div class="panel-title">Consistências verificadas</div>
-            </div>
-            <div style="padding: 16px 20px;">
-              <div class="check-row">
-                <div class="check-icon check-ok">✓</div>
-                <div><strong>301 lotes</strong> com trafo idêntico entre sistema e CAD</div>
-              </div>
-              <div class="check-row">
-                <div class="check-icon check-ok">✓</div>
-                <div>Todos os 4 transformadores encontrados no DXF</div>
-              </div>
-              <div class="check-row">
-                <div class="check-icon check-ok">✓</div>
-                <div>Nenhum lote duplicado em mais de um trafo</div>
-              </div>
-              <div class="check-row">
-                <div class="check-icon check-fail">✗</div>
-                <div>3 inconsistências impedem a confirmação do dimensionamento</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-16 flex-row gap-12" style="justify-content: flex-end;">
-            <button class="btn btn-secondary" onclick="goTo('screen-step3')">Corrigir divergências</button>
-            <button class="btn btn-primary" disabled style="opacity: 0.4; cursor: not-allowed;">Confirmar dimensionamento</button>
+        <div class="val-stat-card warn">
+          <div class="val-stat-icon warn">⚠</div>
+          <div>
+            <div class="val-stat-num warn">3</div>
+            <div class="val-stat-desc">divergências encontradas — revisão necessária</div>
           </div>
         </div>
       </div>
+
+      <!-- Divergências -->
+      <div class="card mb-16">
+        <div class="panel-header" style="background:#fff5f5; border-bottom-color:#f5c6c6;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--red-bg);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:14px;flex-shrink:0;">⚠</div>
+            <div>
+              <div class="panel-title" style="color:var(--red);">Divergências detectadas</div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">Corrija no AutoCAD e reenvie o DXF antes de confirmar</div>
+            </div>
+          </div>
+        </div>
+        <table class="diverg-table">
+          <thead>
+            <tr>
+              <th>Lote</th>
+              <th>Quadra</th>
+              <th>Trafo no sistema</th>
+              <th>Trafo no CAD</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:500;">#247</td>
+              <td>Quadra 12</td>
+              <td><span style="background:#f0f0f0;padding:2px 6px;border-radius:2px;font-size:12px;">ET-01</span></td>
+              <td><span style="background:#f0f0f0;padding:2px 6px;border-radius:2px;font-size:12px;">ET-02</span></td>
+              <td><span class="divergence-badge div-badge-red">Trafo diferente</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:500;">#312</td>
+              <td>Quadra 15</td>
+              <td><span style="background:#f0f0f0;padding:2px 6px;border-radius:2px;font-size:12px;">ET-08</span></td>
+              <td><span style="background:#f0f0f0;padding:2px 6px;border-radius:2px;font-size:12px;">ET-09</span></td>
+              <td><span class="divergence-badge div-badge-red">Trafo diferente</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:500;">#089</td>
+              <td>Quadra 04</td>
+              <td><span style="background:#f0f0f0;padding:2px 6px;border-radius:2px;font-size:12px;">ET-02</span></td>
+              <td><span style="color:var(--text-muted);font-size:12px;">não encontrado</span></td>
+              <td><span class="divergence-badge div-badge-warn">Sem marcador</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Checklist de consistências -->
+      <div class="card mb-24">
+        <div class="panel-header">
+          <div class="panel-title">Verificações realizadas</div>
+        </div>
+        <div>
+          <div class="consistency-item">
+            <div class="consistency-icon ci-ok">✓</div>
+            <div>
+              <div style="font-size:13px;"><strong>301 lotes</strong> com trafo idêntico entre sistema e CAD</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">96,2% de conformidade</div>
+            </div>
+          </div>
+          <div class="consistency-item">
+            <div class="consistency-icon ci-ok">✓</div>
+            <div>
+              <div style="font-size:13px;"><strong>Todos os 4 transformadores</strong> encontrados no DXF final</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">ET-01, ET-02, ET-08, ET-09 presentes</div>
+            </div>
+          </div>
+          <div class="consistency-item">
+            <div class="consistency-icon ci-ok">✓</div>
+            <div>
+              <div style="font-size:13px;"><strong>Nenhum lote duplicado</strong> em mais de um transformador</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Atribuição de lotes sem sobreposição</div>
+            </div>
+          </div>
+          <div class="consistency-item">
+            <div class="consistency-icon ci-fail">✗</div>
+            <div>
+              <div style="font-size:13px; color:var(--red);"><strong>3 inconsistências</strong> impedem a confirmação do dimensionamento</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Corrija os lotes #247, #312 e #089 antes de prosseguir</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações finais -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <button class="btn btn-ghost" onclick="goTo('screen-list')">Sair sem confirmar</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="goTo('screen-step3')">← Corrigir divergências</button>
+          <button class="btn btn-primary" disabled style="opacity: 0.4; cursor: not-allowed;">Confirmar dimensionamento</button>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="step-action-bar">
+    <button class="btn btn-secondary" onclick="goTo('screen-step3')">← Voltar</button>
+    <button class="btn btn-ghost" onclick="goTo('screen-list')">Salvar e sair</button>
   </div>
 </div>
 
@@ -1704,6 +2042,50 @@
     renderDetail();
     var bar = document.getElementById('bulk-bar');
     if (bar) bar.style.display = 'none';
+  }
+
+  // ============================================================
+  // FILTRO DE EMPREENDIMENTOS
+  // ============================================================
+  function filtrarEmpreendimentos() {
+    var nome = (document.getElementById('filter-nome').value || '').toLowerCase().trim();
+    var cidade = (document.getElementById('filter-cidade').value || '').toLowerCase().trim();
+    var estado = document.getElementById('filter-estado').value;
+    var data = document.getElementById('filter-data').value;
+
+    var cards = document.querySelectorAll('#cards-grid .project-card');
+    var visiveis = 0;
+
+    cards.forEach(function(card) {
+      var cardNome = (card.getAttribute('data-nome') || '').toLowerCase();
+      var cardCidade = (card.getAttribute('data-cidade') || '').toLowerCase();
+      var cardEstado = card.getAttribute('data-estado') || '';
+      var cardData = card.getAttribute('data-data') || '';
+
+      var ok = true;
+      if (nome && cardNome.indexOf(nome) === -1) ok = false;
+      if (cidade && cardCidade.indexOf(cidade) === -1) ok = false;
+      if (estado && cardEstado !== estado) ok = false;
+      if (data && cardData !== data) ok = false;
+
+      if (ok) {
+        card.classList.remove('card-hidden');
+        visiveis++;
+      } else {
+        card.classList.add('card-hidden');
+      }
+    });
+
+    var noResults = document.getElementById('no-results');
+    if (noResults) noResults.style.display = visiveis === 0 ? 'block' : 'none';
+  }
+
+  function limparFiltros() {
+    document.getElementById('filter-nome').value = '';
+    document.getElementById('filter-cidade').value = '';
+    document.getElementById('filter-estado').value = '';
+    document.getElementById('filter-data').value = '';
+    filtrarEmpreendimentos();
   }
 </script>
 </body>
