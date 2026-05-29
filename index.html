@@ -59,6 +59,8 @@
   .step { display: flex; align-items: center; gap: 10px; flex: 1; }
   .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
   .step.done .step-num { background: var(--red); color: #fff; }
+  .step.done { cursor: pointer; }
+  .step.done:hover .step-label { color: #fff; }
   .step.active .step-num { background: var(--white); color: var(--black); }
   .step.pending .step-num { background: #333; color: #888; }
   .step-label { font-size: 12px; }
@@ -551,7 +553,7 @@
   </div>
   <div class="progress-bar">
     <div class="progress-steps">
-      <div class="step done">
+      <div class="step done" onclick="goTo('screen-step1-result')">
         <div class="step-num">✓</div>
         <div class="step-label">Lotes brutos</div>
       </div>
@@ -631,7 +633,7 @@
         <div class="panel-title">Lotes identificados</div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <span class="text-sm text-muted">314 lotes · 1.418,00 kVA total</span>
-          <button class="btn btn-ghost" style="padding: 5px 12px; font-size: 12px;" onclick="goTo('screen-step1')">Reimportar DXF</button>
+          <button class="btn btn-ghost" style="padding: 5px 12px; font-size: 12px;" onclick="reimportarDXF()">Reimportar DXF</button>
         </div>
       </div>
       <div>
@@ -675,7 +677,7 @@
   </div>
   <div class="progress-bar">
     <div class="progress-steps">
-      <div class="step done">
+      <div class="step done" onclick="goTo('screen-step1-result')">
         <div class="step-num">✓</div>
         <div class="step-label">Lotes brutos</div>
       </div>
@@ -815,9 +817,9 @@
   </div>
   <div class="progress-bar">
     <div class="progress-steps">
-      <div class="step done"><div class="step-num">✓</div><div class="step-label">Lotes brutos</div></div>
+      <div class="step done" onclick="goTo('screen-step1-result')"><div class="step-num">✓</div><div class="step-label">Lotes brutos</div></div>
       <div class="step-divider"></div>
-      <div class="step done"><div class="step-num">✓</div><div class="step-label">Marcação de trafos</div></div>
+      <div class="step done" onclick="goTo('screen-step2')"><div class="step-num">✓</div><div class="step-label">Marcação de trafos</div></div>
       <div class="step-divider"></div>
       <div class="step active"><div class="step-num">3</div><div class="step-label">Dimensionamento</div></div>
       <div class="step-divider"></div>
@@ -1006,11 +1008,11 @@
   </div>
   <div class="progress-bar">
     <div class="progress-steps">
-      <div class="step done"><div class="step-num">✓</div><div class="step-label">Lotes brutos</div></div>
+      <div class="step done" onclick="goTo('screen-step1-result')"><div class="step-num">✓</div><div class="step-label">Lotes brutos</div></div>
       <div class="step-divider"></div>
-      <div class="step done"><div class="step-num">✓</div><div class="step-label">Marcação de trafos</div></div>
+      <div class="step done" onclick="goTo('screen-step2')"><div class="step-num">✓</div><div class="step-label">Marcação de trafos</div></div>
       <div class="step-divider"></div>
-      <div class="step done"><div class="step-num">✓</div><div class="step-label">Dimensionamento</div></div>
+      <div class="step done" onclick="goTo('screen-step3')"><div class="step-num">✓</div><div class="step-label">Dimensionamento</div></div>
       <div class="step-divider"></div>
       <div class="step active"><div class="step-num">4</div><div class="step-label">Validação final</div></div>
     </div>
@@ -1264,6 +1266,22 @@
     origGoTo(id);
     if (id === 'screen-step1-result') { lotesCurrentPage = 1; renderLotes(); }
   };
+
+  function reimportarDXF() {
+    // Reseta estado da tela de upload
+    var zona = document.getElementById('upload-zone-1');
+    var box = document.getElementById('processing-box');
+    if (zona) zona.style.display = 'block';
+    if (box) box.style.display = 'none';
+    // Reseta ícones dos passos
+    ['ps-1','ps-2','ps-3','ps-4'].forEach(function(id) {
+      var icon = document.getElementById(id + '-icon');
+      var row = document.getElementById(id);
+      if (icon) icon.innerHTML = '○';
+      if (row) row.className = 'processing-step ps-pending';
+    });
+    goTo('screen-step1');
+  }
 
   function openModal() {
     document.getElementById('modal-new').classList.add('open');
