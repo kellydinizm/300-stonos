@@ -490,6 +490,9 @@
               <span id="ps-4-icon">○</span>
               <span>Cálculo de demanda por lote</span>
             </div>
+            <div id="ps-continuar" style="display:none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); text-align: right;">
+              <button class="btn btn-primary" onclick="goTo('screen-step1-result')">Ver resultado →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -700,8 +703,13 @@
   </div>
 
   <div class="page-content">
-    <div class="page-title mb-8">Etapa 2 — Marcação dos transformadores</div>
-    <div class="page-sub mb-24">Insira os marcadores de trafo no AutoCAD e exporte um novo DXF.</div>
+    <div class="flex-between mb-24">
+      <div>
+        <div class="page-title mb-8">Etapa 2 — Marcação dos transformadores</div>
+        <div class="page-sub">Insira os marcadores de trafo no AutoCAD e exporte um novo DXF.</div>
+      </div>
+      <button class="btn btn-ghost" onclick="reimportarDXF2()">Reimportar DXF</button>
+    </div>
 
     <div class="grid-2" style="gap: 24px; align-items: start;">
       <!-- Upload -->
@@ -731,6 +739,9 @@
             <div id="ps2-4" class="processing-step ps-pending">
               <span id="ps2-4-icon">○</span>
               <span>Cálculo de carregamento por trafo</span>
+            </div>
+            <div id="ps2-continuar" style="display:none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); text-align: right;">
+              <button class="btn btn-primary" onclick="goTo('screen-step3')">Ver dimensionamento →</button>
             </div>
           </div>
         </div>
@@ -764,41 +775,6 @@
           </div>
         </div>
 
-        <div class="card">
-          <div class="panel-header">
-            <div class="panel-title">Transformadores esperados</div>
-          </div>
-          <div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">PE - ET01</div>
-                <div class="layer-desc mt-8">225 kVA</div>
-              </div>
-              <span class="text-sm text-muted">27 marcadores esperados</span>
-            </div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">PE - ET02</div>
-                <div class="layer-desc mt-8">75 kVA</div>
-              </div>
-              <span class="text-sm text-muted">19 marcadores esperados</span>
-            </div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">PE - ET08</div>
-                <div class="layer-desc mt-8">75 kVA</div>
-              </div>
-              <span class="text-sm text-muted">18 marcadores esperados</span>
-            </div>
-            <div class="layer-row">
-              <div>
-                <div class="layer-name">PE - ET09</div>
-                <div class="layer-desc mt-8">75 kVA</div>
-              </div>
-              <span class="text-sm text-muted">23 marcadores esperados</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -1267,20 +1243,31 @@
     if (id === 'screen-step1-result') { lotesCurrentPage = 1; renderLotes(); }
   };
 
-  function reimportarDXF() {
-    // Reseta estado da tela de upload
-    var zona = document.getElementById('upload-zone-1');
-    var box = document.getElementById('processing-box');
-    if (zona) zona.style.display = 'block';
-    if (box) box.style.display = 'none';
-    // Reseta ícones dos passos
-    ['ps-1','ps-2','ps-3','ps-4'].forEach(function(id) {
+  function resetUpload(zona, box, continuar, stepIds, timeoutArr) {
+    timeoutArr.forEach(function(t) { clearTimeout(t); });
+    timeoutArr.length = 0;
+    var z = document.getElementById(zona);
+    var b = document.getElementById(box);
+    var c = document.getElementById(continuar);
+    if (z) z.style.display = 'block';
+    if (b) b.style.display = 'none';
+    if (c) c.style.display = 'none';
+    stepIds.forEach(function(id) {
       var icon = document.getElementById(id + '-icon');
       var row = document.getElementById(id);
       if (icon) icon.innerHTML = '○';
       if (row) row.className = 'processing-step ps-pending';
     });
+  }
+
+  function reimportarDXF() {
+    resetUpload('upload-zone-1', 'processing-box', 'ps-continuar', ['ps-1','ps-2','ps-3','ps-4'], timeouts1);
     goTo('screen-step1');
+  }
+
+  function reimportarDXF2() {
+    resetUpload('upload-zone-2', 'processing-box-2', 'ps2-continuar', ['ps2-1','ps2-2','ps2-3','ps2-4'], timeouts2);
+    goTo('screen-step2');
   }
 
   function openModal() {
@@ -1296,58 +1283,66 @@
   // ============================================================
   // PROCESSAMENTO ETAPA 1
   // ============================================================
+  var timeouts1 = [];
+
   function startProcessing() {
     document.getElementById('upload-zone-1').style.display = 'none';
     document.getElementById('processing-box').style.display = 'block';
-    const steps = [
-      { id: 'ps-1', delay: 400 },
-      { id: 'ps-2', delay: 1100 },
-      { id: 'ps-3', delay: 2000 },
-      { id: 'ps-4', delay: 2900 },
-    ];
-    steps.forEach(({ id, delay }) => {
-      setTimeout(() => setRunning(id), delay);
-      setTimeout(() => setDone(id), delay + 600);
+    document.getElementById('ps-continuar').style.display = 'none';
+    var delays = [400, 1100, 2000, 2900];
+    var ids = ['ps-1','ps-2','ps-3','ps-4'];
+    timeouts1 = [];
+    ids.forEach(function(id, i) {
+      timeouts1.push(setTimeout(function(){ setRunning(id); }, delays[i]));
+      timeouts1.push(setTimeout(function(){ setDone(id); }, delays[i] + 600));
     });
-    setTimeout(() => goTo('screen-step1-result'), 4200);
+    timeouts1.push(setTimeout(function() {
+      document.getElementById('ps-continuar').style.display = 'block';
+    }, 3800));
   }
 
   function setRunning(id) {
-    const icon = document.getElementById(id + '-icon');
-    const row = document.getElementById(id);
+    var icon = document.getElementById(id + '-icon');
+    var row = document.getElementById(id);
     if (icon) icon.innerHTML = '<span class="spin"></span>';
-    if (row) { row.className = 'processing-step ps-running'; }
+    if (row) row.className = 'processing-step ps-running';
   }
   function setDone(id) {
-    const icon = document.getElementById(id + '-icon');
-    const row = document.getElementById(id);
+    var icon = document.getElementById(id + '-icon');
+    var row = document.getElementById(id);
     if (icon) icon.innerHTML = '✓';
-    if (row) { row.className = 'processing-step ps-done'; }
+    if (row) row.className = 'processing-step ps-done';
   }
 
   // ============================================================
   // PROCESSAMENTO ETAPA 2
   // ============================================================
+  var timeouts2 = [];
+
   function startProcessing2() {
     document.getElementById('upload-zone-2').style.display = 'none';
     document.getElementById('processing-box-2').style.display = 'block';
-    const steps = ['ps2-1','ps2-2','ps2-3','ps2-4'];
-    steps.forEach((id, i) => {
-      const delay = 400 + i * 700;
-      setTimeout(() => {
-        const icon = document.getElementById(id + '-icon');
-        const row = document.getElementById(id);
+    document.getElementById('ps2-continuar').style.display = 'none';
+    var steps = ['ps2-1','ps2-2','ps2-3','ps2-4'];
+    timeouts2 = [];
+    steps.forEach(function(id, i) {
+      var delay = 400 + i * 700;
+      timeouts2.push(setTimeout(function() {
+        var icon = document.getElementById(id + '-icon');
+        var row = document.getElementById(id);
         if (icon) icon.innerHTML = '<span class="spin"></span>';
         if (row) row.className = 'processing-step ps-running';
-      }, delay);
-      setTimeout(() => {
-        const icon = document.getElementById(id + '-icon');
-        const row = document.getElementById(id);
+      }, delay));
+      timeouts2.push(setTimeout(function() {
+        var icon = document.getElementById(id + '-icon');
+        var row = document.getElementById(id);
         if (icon) icon.innerHTML = '✓';
         if (row) row.className = 'processing-step ps-done';
-      }, delay + 600);
+      }, delay + 600));
     });
-    setTimeout(() => goTo('screen-step3'), 3600);
+    timeouts2.push(setTimeout(function() {
+      document.getElementById('ps2-continuar').style.display = 'block';
+    }, 3400));
   }
 
   // ============================================================
