@@ -577,22 +577,16 @@
     <div class="alert alert-success mb-24">
       <span class="alert-icon">✓</span>
       <div>
-        <strong>DXF processado com sucesso.</strong> 314 lotes identificados em 30 quadras.
+        <strong>DXF processado com sucesso.</strong> 314 lotes identificados.
         Arquivo: <strong>condominioX_lotes.dxf</strong> — 2,3 MB
       </div>
     </div>
 
     <!-- Métricas -->
-    <div class="grid-4 mb-24">
+    <div class="grid-3 mb-24">
       <div class="metric-card">
         <div class="metric-label">Lotes identificados</div>
         <div class="metric-value">314<span class="metric-unit">un</span></div>
-        <div class="metric-sub">317 textos de área</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Quadras</div>
-        <div class="metric-value">30<span class="metric-unit">un</span></div>
-        <div class="metric-sub">30 textos identificados</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Demanda total</div>
@@ -607,60 +601,58 @@
     </div>
 
     <div class="grid-2" style="gap: 24px; align-items: start;">
-      <!-- Layers -->
-      <div class="card">
-        <div class="panel-header">
-          <div class="panel-title">Layers identificados no DXF</div>
+      <!-- Layers + Sugestão -->
+      <div>
+        <div class="card mb-16">
+          <div class="panel-header">
+            <div class="panel-title">Layers identificados no DXF</div>
+          </div>
+          <div>
+            <div class="layer-row">
+              <div>
+                <div class="layer-name">PE-ÁREA LOTES</div>
+                <div class="layer-desc mt-8">Textos com área dos lotes</div>
+              </div>
+              <span class="font-500">314 textos</span>
+            </div>
+            <div class="layer-row">
+              <div>
+                <div class="layer-name">Nº lotes</div>
+                <div class="layer-desc mt-8">Numeração dos lotes</div>
+              </div>
+              <span class="font-500">314 textos</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE-ÁREA LOTES</div>
-              <div class="layer-desc mt-8">Textos com área dos lotes</div>
-            </div>
-            <span class="font-500">317 textos</span>
+
+        <!-- Sugestão de trafos -->
+        <div class="card">
+          <div class="panel-header">
+            <div class="panel-title">Sugestão de transformadores</div>
           </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">Nº lotes</div>
-              <div class="layer-desc mt-8">Numeração dos lotes</div>
+          <div style="padding: 20px;">
+            <div class="text-sm text-muted mb-16">Com base na demanda total de <strong>1.418 kVA</strong> e limite de utilização de <strong>95%</strong>:</div>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+              <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 600;">4</div>
+                <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">Trafos de 225 kVA</div>
+                <div class="text-sm text-muted">Capacidade útil: 855 kVA</div>
+              </div>
+              <div style="display: flex; align-items: center; color: var(--text-muted); font-size: 18px;">+</div>
+              <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center;">
+                <div style="font-size: 28px; font-weight: 600;">4</div>
+                <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">Trafos de 150 kVA</div>
+                <div class="text-sm text-muted">Capacidade útil: 570 kVA</div>
+              </div>
             </div>
-            <span class="font-500">314 textos</span>
-          </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE - Número de Quadra</div>
-              <div class="layer-desc mt-8">Numeração das quadras</div>
+            <div style="background: var(--bg); border-radius: var(--radius); padding: 12px 14px; display: flex; justify-content: space-between; font-size: 13px;">
+              <span class="text-muted">Capacidade útil total</span>
+              <span class="font-500">1.425 kVA <span style="color: var(--green); font-size: 12px;">▲ 7 kVA de folga</span></span>
             </div>
-            <span class="font-500">30 textos</span>
-          </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE - ET01</div>
-              <div class="layer-desc mt-8">Marcadores trafo ET-01 (ignorados nesta etapa)</div>
+            <div class="alert alert-warning mt-16">
+              <span class="alert-icon">⚠</span>
+              <div class="text-sm">Esta é uma sugestão inicial. A distribuição real será definida na próxima etapa com a marcação no AutoCAD.</div>
             </div>
-            <span class="font-500 text-muted">27 círculos</span>
-          </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE - ET02</div>
-              <div class="layer-desc mt-8">Marcadores trafo ET-02 (ignorados nesta etapa)</div>
-            </div>
-            <span class="font-500 text-muted">19 círculos</span>
-          </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE - ET08</div>
-              <div class="layer-desc mt-8">Marcadores trafo ET-08 (ignorados nesta etapa)</div>
-            </div>
-            <span class="font-500 text-muted">18 círculos</span>
-          </div>
-          <div class="layer-row">
-            <div>
-              <div class="layer-name">PE - ET09</div>
-              <div class="layer-desc mt-8">Marcadores trafo ET-09 (ignorados nesta etapa)</div>
-            </div>
-            <span class="font-500 text-muted">23 círculos</span>
           </div>
         </div>
       </div>
