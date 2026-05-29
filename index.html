@@ -4,29 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stonos — Dimensionamento RDS</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --red: #CC1F1F;
-    --black: #111111;
-    --bg: #F7F5F2;
+    --primary: #0057FF;
+    --primary-hover: #0046CC;
+    --primary-light: #EEF3FF;
+    --red: #D00D00;
+    --black: #191919;
+    --bg: #F9F9F9;
     --white: #FFFFFF;
-    --border: #E0DBD5;
-    --green: #1A7A3C;
-    --green-bg: #EAF5EE;
-    --yellow: #B45309;
-    --yellow-bg: #FEF3C7;
+    --border: #E8E8E8;
+    --green: #0A8C0A;
+    --green-bg: #E8FBE8;
+    --yellow: #D96000;
+    --yellow-bg: #FFF3E8;
     --red-bg: #FDECEA;
-    --text-muted: #6B6460;
+    --text-muted: #707070;
     --radius: 4px;
   }
-  body { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--black); background: var(--bg); min-width: 320px; }
+  body { font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: var(--black); background: var(--bg); min-width: 320px; }
   .screen { display: none; min-height: 100vh; }
 
   /* HEADER */
   .header { background: var(--black); padding: 0 32px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-size: 20px; font-weight: 600; color: var(--red); letter-spacing: -0.5px; }
+  .logo { font-size: 20px; font-weight: 600; color: var(--primary); letter-spacing: -0.5px; }
   .header-nav { display: flex; align-items: center; gap: 24px; }
   .header-nav a { color: #999; font-size: 13px; text-decoration: none; cursor: pointer; }
   .header-nav a:hover { color: #fff; }
@@ -34,8 +37,8 @@
 
   /* BUTTONS */
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; font-size: 13px; font-weight: 500; border: none; cursor: pointer; border-radius: var(--radius); transition: background 0.15s; font-family: 'Inter', sans-serif; }
-  .btn-primary { background: var(--red); color: #fff; }
-  .btn-primary:hover { background: #b01a1a; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-hover); }
   .btn-secondary { background: var(--white); color: var(--black); border: 1px solid var(--border); }
   .btn-secondary:hover { background: var(--bg); }
   .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
@@ -58,7 +61,7 @@
   .progress-steps { display: flex; align-items: center; height: 52px; }
   .step { display: flex; align-items: center; gap: 10px; flex: 1; }
   .step-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
-  .step.done .step-num { background: var(--red); color: #fff; }
+  .step.done .step-num { background: var(--primary); color: #fff; }
   .step.done { cursor: pointer; }
   .step.done:hover .step-label { color: #fff; }
   .step.active .step-num { background: var(--white); color: var(--black); }
@@ -92,7 +95,7 @@
 
   /* UPLOAD ZONE */
   .upload-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 48px 32px; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
-  .upload-zone:hover { border-color: var(--red); background: #fef8f8; }
+  .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
   .upload-icon { font-size: 36px; margin-bottom: 12px; }
   .upload-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
   .upload-sub { font-size: 13px; color: var(--text-muted); }
@@ -103,7 +106,7 @@
   .ps-pending { color: #ccc; }
   .ps-running { color: var(--text-muted); }
   .ps-done { color: var(--green); }
-  .spin { display: inline-block; width: 14px; height: 14px; border: 2px solid #ddd; border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  .spin { display: inline-block; width: 14px; height: 14px; border: 2px solid #ddd; border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* GAUGE */
@@ -136,9 +139,9 @@
 
   /* SLIDER */
   .slider-wrap { margin-top: 8px; }
-  input[type=range] { width: 100%; accent-color: var(--red); }
+  input[type=range] { width: 100%; accent-color: var(--primary); }
   .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-  .slider-value { font-size: 22px; font-weight: 500; color: var(--red); text-align: center; margin-bottom: 4px; }
+  .slider-value { font-size: 22px; font-weight: 500; color: var(--primary); text-align: center; margin-bottom: 4px; }
 
   /* TRAFO CARD */
   .trafo-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; transition: border-color 0.15s; }
@@ -189,7 +192,7 @@
   /* LOGIN SCREEN */
   #screen-login { background: var(--black); align-items: center; justify-content: center; }
   .login-card { background: var(--white); border-radius: var(--radius); padding: 40px; width: 380px; }
-  .login-logo { font-size: 28px; font-weight: 600; color: var(--red); letter-spacing: -0.5px; margin-bottom: 4px; }
+  .login-logo { font-size: 28px; font-weight: 600; color: var(--primary); letter-spacing: -0.5px; margin-bottom: 4px; }
   .login-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
 
   /* PROJECT CARDS */
@@ -205,7 +208,7 @@
   .project-progress-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
   .project-progress-dots { display: flex; gap: 4px; }
   .progress-dot { flex: 1; height: 4px; border-radius: 2px; }
-  .progress-dot.done { background: var(--red); }
+  .progress-dot.done { background: var(--primary); }
   .progress-dot.pending { background: var(--border); }
 
   /* LAYER LIST */
@@ -224,8 +227,8 @@
   /* ICON BUTTONS */
   .btn-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border-radius: var(--radius); border: 1px solid var(--border); background: var(--white); cursor: pointer; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
   .btn-icon:hover { background: var(--bg); color: var(--black); border-color: #999; }
-  .btn-icon-primary { background: var(--red); color: #fff; border-color: var(--red); }
-  .btn-icon-primary:hover { background: #b01a1a; border-color: #b01a1a; }
+  .btn-icon-primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .btn-icon-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
 
   /* FILTER BAR */
   .filter-bar { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
@@ -411,7 +414,7 @@
     <div class="login-tagline">Dimensionamento RDS — Rede Subterrânea</div>
     <div class="form-group mt-16">
       <label class="form-label">E-mail</label>
-      <input class="form-control" type="text" value="daniel@300software.com">
+      <input class="form-control" type="text" value="daniel@stonos.com.br">
     </div>
     <div class="form-group">
       <label class="form-label">Senha</label>
@@ -1328,8 +1331,8 @@
         <div>
           <div class="text-sm text-muted mb-8">Limite de utilização</div>
           <div class="flex-row gap-8">
-            <input type="range" min="80" max="100" value="95" id="global-slider" oninput="updateLimit(this.value)" style="width: 140px; accent-color: var(--red);">
-            <span id="global-limit-display" style="font-size: 15px; font-weight: 500; color: var(--red); min-width: 36px;">95%</span>
+            <input type="range" min="80" max="100" value="95" id="global-slider" oninput="updateLimit(this.value)" style="width: 140px; accent-color: var(--primary);">
+            <span id="global-limit-display" style="font-size: 15px; font-weight: 500; color: var(--primary); min-width: 36px;">95%</span>
           </div>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
