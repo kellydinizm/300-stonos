@@ -1492,7 +1492,7 @@
             '</div>' +
             '<div class="grid-2 mb-4" style="gap:12px;">' +
               '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Demanda total</div><div style="font-size:18px;font-weight:500;margin-top:4px;">' + fmtN(dem) + ' kVA</div></div>' +
-              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Capacidade</div><select onchange="alterarKva(\'' + id + '\', parseFloat(this.value))" style="font-size:18px;font-weight:500;margin-top:4px;border:none;background:transparent;cursor:pointer;font-family:Inter,sans-serif;color:var(--black);text-align:center;">' + [225,150,112.5,75].map(function(v){ return '<option value="'+v+'"'+(v===kva?' selected':'')+'>'+v+' kVA</option>'; }).join('') + '</select></div>' +
+              '<div style="text-align:center;padding:12px;background:var(--bg);border-radius:var(--radius);"><div class="text-sm text-muted">Capacidade</div><select onchange="alterarKva(\'' + id + '\', parseFloat(this.value))" style="font-size:16px;font-weight:500;margin-top:6px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 8px;background:var(--white);cursor:pointer;font-family:Inter,sans-serif;color:var(--black);display:block;width:100%;">' + [225,150,112.5,75].map(function(v){ return '<option value="'+v+'"'+(v===kva?' selected':'')+'>'+v+' kVA</option>'; }).join('') + '</select></div>' +
             '</div>' +
             alertHtml +
           '</div>' +
