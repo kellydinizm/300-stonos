@@ -269,44 +269,125 @@
   .diverg-table th { background: #fff5f5; }
   .diverg-table tr:hover td { background: #fef8f8; }
 
-  /* MOBILE RESPONSIVE */
+  /* MOBILE RESPONSIVE — apenas mobile, desktop intocado */
   @media (max-width: 768px) {
+    /* Base */
     body { min-width: 0; }
     .page-content { padding: 16px; }
+
+    /* Header */
     .header { padding: 0 16px; height: 48px; }
     .header-user { display: none; }
+
+    /* Progress bar */
     .progress-bar { padding: 0 12px; }
-    .progress-steps { gap: 4px; }
-    .step { gap: 6px; }
+    .progress-steps { gap: 2px; }
+    .step { gap: 6px; min-width: 0; flex: 0 0 auto; }
     .step-label { display: none; }
-    .step-divider { width: 16px; margin: 0 2px; }
+    .step-num { width: 28px; height: 28px; font-size: 12px; }
+    .step-divider { width: 12px; margin: 0 2px; flex-shrink: 0; }
+
+    /* Grids — colapsa para 1 coluna por padrão */
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+
+    /* Exceção: cards de trafo ficam em 2 colunas no passo 3 */
+    #trafo-cards-container { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+
+    /* Tipografia e layout */
     .flex-between { flex-wrap: wrap; gap: 10px; }
     .page-title { font-size: 17px; }
     .metric-value { font-size: 22px; }
-    .filter-bar { flex-direction: column; }
-    .filter-group { min-width: 100%; flex: none; }
-    th, td { padding: 8px 10px; font-size: 12px; }
-    .modal { width: 95vw; margin: 0 16px; }
-    .trafo-card { padding: 14px; }
-    .val-summary-grid { grid-template-columns: 1fr; }
-    #screen-login { align-items: flex-start; padding-top: 48px; padding: 20px; }
-    .login-card { width: 100%; max-width: 400px; padding: 28px 20px; }
-    .info-row { flex-direction: column; }
-    .info-item { border-right: none; border-bottom: 1px solid var(--border); min-width: 100%; }
-    .info-item:last-child { border-bottom: none; }
-    .step-action-bar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
-    .upload-zone { padding: 32px 16px; }
-    .project-stats { flex-wrap: wrap; gap: 12px; }
-    .screen-list-grid { grid-template-columns: 1fr !important; }
+
+    /* Filtros — grid 2 colunas com nome em linha inteira */
+    .filter-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+    }
+    .filter-bar .filter-group { min-width: 0; flex: none; }
+    .filter-bar .filter-group:first-child { grid-column: 1 / -1; }
+    .filter-bar > button { grid-column: 2; align-self: flex-end; height: 36px; }
+
+    /* Tabelas com scroll horizontal */
+    .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 420px; }
+    th, td { padding: 10px 12px; font-size: 12px; white-space: nowrap; }
+
+    /* Modal */
+    .modal { width: 95vw; margin: 0 auto; }
+    .modal-body { padding: 16px; }
+    .grid-2 .form-group { grid-column: unset; }
+
+    /* Trafo cards no passo 3 */
+    .trafo-card { padding: 12px; }
+    .trafo-kva { font-size: 18px; margin-bottom: 10px; }
+
+    /* Detalhe do trafo — ocupa largura toda */
+    #trafo-detail-container .grid-2 { grid-template-columns: 1fr !important; }
+
+    /* Validação */
+    .val-summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .val-stat-card { padding: 16px 14px; gap: 12px; }
     .val-stat-num { font-size: 28px; }
     .val-stat-icon { width: 40px; height: 40px; font-size: 18px; }
+    .val-stat-desc { font-size: 12px; }
+
+    /* Login */
+    #screen-login { align-items: flex-start; padding: 20px; padding-top: 48px; }
+    .login-card { width: 100%; max-width: 400px; padding: 28px 20px; }
+
+    /* Info row do projeto — grid 2 colunas */
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex-direction: unset;
+    }
+    .info-item {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      min-width: 0;
+      padding: 12px 14px;
+    }
+    .info-item:nth-child(odd) { border-right: 1px solid var(--border); }
+    .info-item:last-child,
+    .info-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .info-item-val { font-size: 13px; }
+
+    /* Upload */
+    .upload-zone { padding: 28px 16px; }
+    .upload-title { font-size: 14px; }
+
+    /* Listas de projetos */
+    .screen-list-grid { grid-template-columns: 1fr !important; }
+    .project-stats { flex-wrap: wrap; gap: 10px; }
+
+    /* Gauge */
     .gauge-wrap { width: 100px; height: 100px; }
+
+    /* Botões de ícone maiores para touch */
+    .btn-icon { width: 44px; height: 44px; }
+
+    /* Botões nas telas de edição */
+    .flex-between .btn { font-size: 12px; padding: 8px 14px; }
+
+    /* Card de métricas */
+    .metric-card { padding: 14px; }
+    .metric-label { font-size: 10px; }
   }
-  @media (max-width: 480px) {
+
+  @media (max-width: 430px) {
     .logo { font-size: 18px; }
-    .btn { padding: 8px 14px; font-size: 12px; }
-    .header-nav { gap: 12px; }
+    .header-nav { gap: 10px; }
+    .header-nav a { font-size: 12px; }
+    /* Validação em 1 coluna só nos menores */
+    .val-summary-grid { grid-template-columns: 1fr; }
+    /* Info row em 1 coluna nos menores */
+    .info-row { grid-template-columns: 1fr; }
+    .info-item { border-right: none; }
+    .info-item:nth-child(odd) { border-right: none; }
+    .info-item:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--border); }
+    .info-item:last-child { border-bottom: none; }
   }
 </style>
 </head>
@@ -1859,6 +1940,13 @@
     atualizarBulkBar();
     renderAllTrafos();
     renderDetail();
+    // Mobile: scroll automático para o detalhe
+    if (window.innerWidth <= 768) {
+      var detail = document.getElementById('trafo-detail-container');
+      if (detail) setTimeout(function() {
+        detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
   }
 
   function renderDetail() {
