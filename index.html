@@ -1355,6 +1355,8 @@
   var selectedTrafoId = null;
   var globalLimit = 95;
   var selectedLotes = {};
+  var detalhePageAtual = 1;
+  var detalhePorPagina = 10;
   function fmtN(n) { return n.toFixed(2).replace('.', ','); }
 
   function getTrafoDemand(trafoId) {
@@ -1381,6 +1383,13 @@
     globalLimit = parseInt(val);
     document.getElementById('global-limit-display').textContent = val + '%';
     renderAllTrafos();
+    if (selectedTrafoId) renderDetail();
+  }
+
+  function alterarKva(trafoId, novoKva) {
+    trafosConfig[trafoId].kva = novoKva;
+    renderAllTrafos();
+    if (selectedTrafoId === trafoId) renderDetail();
   }
 
   function renderAllTrafos() {
@@ -1399,10 +1408,13 @@
       var alertHtml = '';
       if (color === 'red') alertHtml = '<div class="alert alert-error mt-8" style="font-size:11px;padding:5px 8px;">Acima do limite (' + globalLimit + '%)</div>';
       else if (color === 'yellow') alertHtml = '<div class="alert alert-warning mt-8" style="font-size:11px;padding:5px 8px;">Próximo ao limite</div>';
+      var kvaOpts = [225, 150, 112.5, 75].map(function(v) {
+        return '<option value="' + v + '"' + (v === kva ? ' selected' : '') + '>' + v + ' kVA</option>';
+      }).join('');
       return '<div class="trafo-card' + (isSelected ? ' selected' : '') + '" onclick="selectTrafo(\'' + id + '\')" id="card-' + id + '">' +
-        '<div class="trafo-id">' + id + '</div>' +
-        '<div class="trafo-kva">' + kva + ' kVA</div>' +
-        '<div class="trafo-stats"><span>' + lots + ' lotes</span><span>' + fmtN(dem) + ' kVA</span></div>' +
+        '<div class="flex-between mb-8"><div class="trafo-id">' + id + '</div>' +
+        '<select onclick="event.stopPropagation()" onchange="alterarKva(\'' + id + '\', parseFloat(this.value))" style="font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius);padding:2px 6px;background:var(--bg);cursor:pointer;font-family:Inter,sans-serif;">' + kvaOpts + '</select></div>' +
+        '<div class="trafo-stats"><span>' + lots + ' lotes</span><span>' + fmtN(dem) + ' kVA demanda</span></div>' +
         '<div class="flex-between text-sm mb-8"><span class="text-muted">Utilização</span>' +
         '<span style="font-weight:500;color:' + colorVar + ';">' + pct.toFixed(1).replace('.', ',') + '%</span></div>' +
         '<div class="util-bar-wrap"><div class="util-bar util-' + color + '" style="width:' + barW + '%;"></div></div>' +
@@ -1410,9 +1422,17 @@
     }).join('');
   }
 
+  function detalheNavPage(dir) {
+    var lots = getTrafoLots(selectedTrafoId);
+    var total = Math.ceil(lots.length / detalhePorPagina);
+    detalhePageAtual = Math.min(Math.max(1, detalhePageAtual + dir), total);
+    renderDetail();
+  }
+
   function selectTrafo(id) {
     selectedTrafoId = id;
     selectedLotes = {};
+    detalhePageAtual = 1;
     atualizarBulkBar();
     renderAllTrafos();
     renderDetail();
@@ -1435,8 +1455,11 @@
     else alertHtml = '<div class="alert alert-success mt-16"><span class="alert-icon">✓</span><div>Trafo dentro do limite de utilização.</div></div>';
 
     var lots = getTrafoLots(id);
+    var totalPages = Math.ceil(lots.length / detalhePorPagina);
+    if (detalhePageAtual > totalPages) detalhePageAtual = totalPages || 1;
+    var lotsPagina = lots.slice((detalhePageAtual - 1) * detalhePorPagina, detalhePageAtual * detalhePorPagina);
     var otherIds = Object.keys(trafosConfig).filter(function(x){ return x !== id; });
-    var tbody = lots.map(function(l) {
+    var tbody = lotsPagina.map(function(l) {
       var chk = selectedLotes[l.id] ? ' checked' : '';
       var trocarBtns = otherIds.map(function(tid) {
         var pct = (getTrafoDemand(tid) / trafosConfig[tid].kva * 100).toFixed(0);
@@ -1485,9 +1508,17 @@
               '<input type="checkbox" id="chk-all" onchange="toggleTodos(this.checked)"> Selecionar todos' +
             '</label>' +
           '</div>' +
-          '<div style="max-height:340px;overflow-y:auto;">' +
+          '<div>' +
             '<table><thead><tr><th style="width:32px;"></th><th>Lote</th><th>Quadra</th><th>Área</th><th>Demanda</th><th></th></tr></thead>' +
             '<tbody>' + tbody + '</tbody></table>' +
+          '</div>' +
+          '<div style="padding:10px 14px;background:#faf8f6;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">' +
+            '<div style="display:flex;align-items:center;gap:8px;">' +
+              '<button class="btn btn-ghost" style="padding:5px 10px;" onclick="detalheNavPage(-1)" ' + (detalhePageAtual <= 1 ? 'disabled' : '') + '>←</button>' +
+              '<span class="text-sm text-muted">Pág. ' + detalhePageAtual + ' de ' + totalPages + '</span>' +
+              '<button class="btn btn-ghost" style="padding:5px 10px;" onclick="detalheNavPage(1)" ' + (detalhePageAtual >= totalPages ? 'disabled' : '') + '>→</button>' +
+            '</div>' +
+            '<span class="text-sm text-muted">' + lots.length + ' lotes · ' + fmtN(dem) + ' kVA total</span>' +
           '</div>' +
         '</div>' +
       '</div>';
