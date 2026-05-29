@@ -23,7 +23,6 @@
   }
   body { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--black); background: var(--bg); min-width: 1024px; }
   .screen { display: none; min-height: 100vh; }
-  .screen.active { display: block; }
 
   /* HEADER */
   .header { background: var(--black); padding: 0 32px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
@@ -183,7 +182,6 @@
 
   /* LOGIN SCREEN */
   #screen-login { background: var(--black); align-items: center; justify-content: center; }
-  #screen-login.active { display: flex; }
   .login-card { background: var(--white); border-radius: var(--radius); padding: 40px; width: 380px; }
   .login-logo { font-size: 28px; font-weight: 600; color: var(--red); letter-spacing: -0.5px; margin-bottom: 4px; }
   .login-tagline { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
@@ -223,7 +221,7 @@
 <!-- ============================================================ -->
 <!-- TELA 1 — LOGIN -->
 <!-- ============================================================ -->
-<div id="screen-login" class="screen active">
+<div id="screen-login" class="screen">
   <div class="login-card">
     <div class="login-logo">stonos</div>
     <div class="login-tagline">Dimensionamento RDS — Rede Subterrânea</div>
@@ -1209,10 +1207,18 @@
   // NAVEGAÇÃO
   // ============================================================
   function goTo(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) { el.classList.add('active'); window.scrollTo(0, 0); }
+    document.querySelectorAll('.screen').forEach(function(s) {
+      s.style.display = 'none';
+    });
+    var el = document.getElementById(id);
+    if (el) {
+      el.style.display = (id === 'screen-login') ? 'flex' : 'block';
+      window.scrollTo(0, 0);
+    }
   }
+
+  // Inicializa mostrando o login
+  goTo('screen-login');
 
   function openModal() {
     document.getElementById('modal-new').classList.add('open');
