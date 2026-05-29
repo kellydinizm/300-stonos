@@ -1468,10 +1468,9 @@
         '<td>' + fmtN(l.area) + ' m²</td>' +
         '<td>' + fmtN(l.dem) + ' kVA</td>' +
         '<td>' +
-          '<button id="trocar-btn-' + l.id + '" class="btn btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="abrirTrocarInline(' + l.id + ')">Trocar</button>' +
-          '<div id="trocar-opts-' + l.id + '" style="display:none;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">' +
+          '<button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;" onclick="toggleTrocarInline(' + l.id + ')">Trocar</button>' +
+          '<div id="trocar-opts-' + l.id + '" style="display:none;margin-top:4px;display:none;flex-direction:column;gap:3px;">' +
             trocarBtns +
-            '<button class="btn btn-ghost" style="padding:3px 8px;font-size:11px;color:var(--text-muted);" onclick="fecharTrocarInline(' + l.id + ')">×</button>' +
           '</div>' +
         '</td></tr>';
     }).join('');
@@ -1574,21 +1573,14 @@
     renderDetail();
   }
 
-  function abrirTrocarInline(loteId) {
-    // Fecha qualquer outro aberto
-    document.querySelectorAll('[id^="trocar-opts-"]').forEach(function(el) { el.style.display = 'none'; });
-    document.querySelectorAll('[id^="trocar-btn-"]').forEach(function(el) { el.style.display = ''; });
+  function toggleTrocarInline(loteId) {
     var opts = document.getElementById('trocar-opts-' + loteId);
-    var btn = document.getElementById('trocar-btn-' + loteId);
-    if (opts) opts.style.display = 'flex';
-    if (btn) btn.style.display = 'none';
-  }
-
-  function fecharTrocarInline(loteId) {
-    var opts = document.getElementById('trocar-opts-' + loteId);
-    var btn = document.getElementById('trocar-btn-' + loteId);
-    if (opts) opts.style.display = 'none';
-    if (btn) btn.style.display = '';
+    if (!opts) return;
+    // Fecha todos os outros abertos
+    document.querySelectorAll('[id^="trocar-opts-"]').forEach(function(el) {
+      if (el.id !== 'trocar-opts-' + loteId) el.style.display = 'none';
+    });
+    opts.style.display = opts.style.display === 'flex' ? 'none' : 'flex';
   }
 
   function moverLote(loteId, novoTrafo) {
