@@ -362,8 +362,17 @@
     .screen-list-grid { grid-template-columns: 1fr !important; }
     .project-stats { flex-wrap: wrap; gap: 10px; }
 
-    /* Gauge */
-    .gauge-wrap { width: 100px; height: 100px; }
+    /* Gauge — manter 120px para o SVG fixo não deslocar o texto */
+    .gauge-wrap { width: 120px; height: 120px; }
+
+    /* Sugestão de transformadores — quebra em linhas no mobile */
+    .sugestao-body { flex-wrap: wrap !important; gap: 14px !important; align-items: flex-start !important; }
+    .sugestao-body > div:last-child { margin-left: 0 !important; width: 100%; }
+
+    /* Paginação + botões — empilha verticalmente */
+    .lotes-footer { flex-direction: column !important; gap: 12px !important; align-items: stretch !important; padding: 16px !important; }
+    .lotes-footer > div { justify-content: center; }
+    .lotes-footer > div .btn { flex: 1; justify-content: center; }
 
     /* Botões de ícone maiores para touch */
     .btn-icon { width: 44px; height: 44px; }
@@ -1114,7 +1123,7 @@
         <span style="font-size: 13px; font-weight: 500;">Sugestão de transformadores</span>
         <span style="font-size: 12px; color: var(--text-muted);">Demanda total: 1.418 kVA · Limite: 95%</span>
       </div>
-      <div style="padding: 14px 20px; display: flex; align-items: center; gap: 32px;">
+      <div class="sugestao-body" style="padding: 14px 20px; display: flex; align-items: center; gap: 32px;">
         <div style="display: flex; align-items: baseline; gap: 6px;">
           <span style="font-size: 24px; font-weight: 600;">4</span>
           <span style="font-size: 13px; color: var(--text-muted);">trafos de 225 kVA</span>
@@ -1155,7 +1164,7 @@
           <tbody id="lotes-tbody"></tbody>
         </table>
       </div>
-      <div style="padding: 12px 14px; background: #faf8f6; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+      <div class="lotes-footer" style="padding: 12px 14px; background: #faf8f6; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 8px;">
           <button class="btn btn-ghost" id="btn-prev" onclick="lotesPage(-1)" style="padding: 6px 12px;">← Anterior</button>
           <span class="text-sm text-muted" id="lotes-page-label">Página 1 de 32</span>
